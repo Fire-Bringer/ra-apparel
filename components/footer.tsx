@@ -111,24 +111,24 @@ export default function Footer() {
         </div>
 
         {/* Payment Methods */}
-        <div className="flex flex-wrap gap-2 my-6">
+        <div className="flex flex-wrap gap-2 my-6 justify-center">
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/visa.webp" alt="Visa" className="h-5" />
+            <img src="/placeholder.svg?height=20&width=30" alt="Visa" className="h-5" />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/amx.webp" alt="American Express" className="h-5" />
+            <img src="/placeholder.svg?height=20&width=30" alt="American Express" className="h-5" />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/master.webp" alt="Mastercard" className="h-5" />
+            <img src="/placeholder.svg?height=20&width=30" alt="Mastercard" className="h-5" />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/stripe.webp" alt="Stripe" className="h-5" />
+            <img src="/placeholder.svg?height=20&width=30" alt="Stripe" className="h-5" />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/paypal.webp" alt="PayPal" className="h-5" />
+            <img src="/placeholder.svg?height=20&width=30" alt="PayPal" className="h-5" />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/apple.webp" alt="Apple Pay" className="h-5" />
+            <img src="/placeholder.svg?height=20&width=30" alt="Apple Pay" className="h-5" />
           </div>
         </div>
 
