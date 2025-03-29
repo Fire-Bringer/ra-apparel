@@ -28,7 +28,13 @@ export default function LimitedEdition() {
           {/* Image - Desktop Version (hidden on mobile) */}
           <div className="hidden md:flex w-full md:w-1/2 justify-center md:justify-end">
             <div className="relative w-full max-w-sm md:max-w-md aspect-[3/4]">
-              <Image src="/limited-edition-new.webp" alt="Limited Edition Pink Hoodie" fill className="object-cover" />
+              <Image
+                src="/limited-edition-new.webp"
+                alt="Limited Edition Pink Hoodie"
+                fill
+                className="object-cover"
+                style={{ objectPosition: "60% center" }}
+              />
             </div>
           </div>
 
@@ -40,7 +46,7 @@ export default function LimitedEdition() {
                 alt="Limited Edition Pink Hoodie"
                 fill
                 className="object-cover"
-                style={{ objectPosition: "center center" }} // Adjusted for this specific image
+                style={{ objectPosition: "60% center" }}
               />
             </div>
           </div>
