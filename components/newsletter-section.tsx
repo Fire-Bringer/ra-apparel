@@ -26,7 +26,7 @@ export default function NewsletterSection() {
       {/* Desktop Background Image (hidden on mobile) */}
       <div className="absolute inset-0 hidden md:block opacity-40">
         <div className="relative w-full h-full">
-          <Image src="/newsletter-bg.png" alt="Newsletter background" fill priority className="object-cover" />
+          <Image src="/newsletter-bg.webp" alt="Newsletter background" fill priority className="object-cover" />
         </div>
       </div>
 
@@ -60,4 +60,3 @@ export default function NewsletterSection() {
     </section>
   )
 }
-

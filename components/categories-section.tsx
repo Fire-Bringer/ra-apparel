@@ -6,7 +6,7 @@ const categories = [
   {
     id: "1",
     name: "Hoodies",
-    imageSrc: "/new-hoodie-image.webp",
+    imageSrc: "/new-hoodie.webp",
     slug: "hoodies",
   },
   {
@@ -88,4 +88,3 @@ export default function CategoriesSection() {
     </section>
   )
 }
-

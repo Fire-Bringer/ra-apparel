@@ -21,7 +21,7 @@ const articles = [
     id: "3",
     title: "OG Boss",
     slug: "og-boss",
-    imageSrc: "/article-3.jpeg",
+    imageSrc: "/article-3.webp",
   },
 ]
 
@@ -104,4 +104,3 @@ export default function LatestArticles() {
     </section>
   )
 }
-

@@ -6,32 +6,32 @@ const feedImages = [
   {
     id: "1",
     alt: "Person in black hoodie",
-    imageSrc: "/placeholder.svg?height=300&width=300",
+    imageSrc: "/ig1.webp",
   },
   {
     id: "2",
     alt: "Person in white outfit",
-    imageSrc: "/placeholder.svg?height=300&width=300",
+    imageSrc: "/ig2.webp",
   },
   {
     id: "3",
     alt: "Two people looking at phone",
-    imageSrc: "/placeholder.svg?height=300&width=300",
+    imageSrc: "/ig3.webp",
   },
   {
     id: "4",
     alt: "Person with dreadlocks",
-    imageSrc: "/placeholder.svg?height=300&width=300",
+    imageSrc: "/ig4.webp",
   },
   {
     id: "5",
     alt: "Two people in casual wear",
-    imageSrc: "/placeholder.svg?height=300&width=300",
+    imageSrc: "/ig5.webp",
   },
   {
     id: "6",
     alt: "Group of people in streetwear",
-    imageSrc: "/placeholder.svg?height=300&width=300",
+    imageSrc: "/ig6.webp",
   },
 ]
 
@@ -114,4 +114,3 @@ export default function SmsPlug() {
     </section>
   )
 }
-
