@@ -26,7 +26,7 @@ export default function Footer() {
       <div className="md:hidden px-5 py-8">
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-3">RAA</h2>
-          <p className="text-sm mb-4">More than just a hustle. It's a lifestyle.</p>
+          <p className="text-sm mb-4">More than just a hustle. Its a lifestyle.</p>
 
           <div className="flex space-x-4 mb-6">
             <Link href="https://instagram.com" className="hover:opacity-80">
@@ -158,7 +158,7 @@ export default function Footer() {
               <p className="text-sm mb-6">
                 More than just a hustle.
                 <br />
-                It's a lifestyle.
+                Its a lifestyle.
               </p>
 
               <div className="flex space-x-4">
