@@ -41,7 +41,13 @@ export default function CollectionsSection() {
                   src={collection.imageSrc || "/placeholder.svg"}
                   alt={collection.name}
                   fill
-                  className="object-cover"
+                  className={`object-cover ${
+                    collection.id === "2"
+                      ? "object-[70%_center]"
+                      : collection.id === "3"
+                        ? "object-[20%_center]"
+                        : "object-center"
+                  }`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-6 text-white">
