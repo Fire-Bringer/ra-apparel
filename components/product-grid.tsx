@@ -23,7 +23,7 @@ const products = [
     name: "Get Money",
     price: 49.99,
     salePrice: 39.99,
-    imageSrc: "/article-1.webp",
+    imageSrc: "/fresh-set.webp",
     isNew: false,
     isSale: true,
     slug: "get-money",
@@ -33,7 +33,7 @@ const products = [
     name: "Africa - Tribe Hoodie",
     price: 59.99,
     salePrice: 49.99,
-    imageSrc: "/article-2.webp",
+    imageSrc: "/article-1.webp",
     isNew: false,
     isSale: true,
     slug: "africa-tribe-hoodie",
@@ -43,7 +43,7 @@ const products = [
     name: "Black Hoodie",
     price: 39.99,
     salePrice: null,
-    imageSrc: "/article-3.webp",
+    imageSrc: "/article-2.webp",
     isNew: false,
     isSale: false,
     slug: "black-hoodie",
@@ -53,7 +53,7 @@ const products = [
     name: "Graphic Tee",
     price: 29.99,
     salePrice: null,
-    imageSrc: "/fresh-set.webp",
+    imageSrc: "/article-3.webp",
     isNew: true,
     isSale: false,
     slug: "graphic-tee",
@@ -286,8 +286,8 @@ export default function ProductGrid() {
             </div>
           </div>
 
-          {/* Mobile Product Grid (1 column) */}
-          <div className="grid grid-cols-1 gap-4 md:hidden">
+          {/* Mobile Product Grid (2 columns) - Updated from 1 column to 2 columns */}
+          <div className="grid grid-cols-2 gap-3 md:hidden">
             {products.map((product) => (
               <Link key={product.id} href={`/product/${product.slug}`} className="block">
                 <div className="border border-gray-300 rounded-md overflow-hidden">
@@ -299,22 +299,22 @@ export default function ProductGrid() {
                       className="object-cover"
                     />
                     {product.isNew && (
-                      <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1">NEW</div>
+                      <div className="absolute top-1 left-1 bg-black text-white text-[10px] px-1.5 py-0.5">NEW</div>
                     )}
                     {product.isSale && (
-                      <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1">SALE</div>
+                      <div className="absolute top-1 right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5">SALE</div>
                     )}
                   </div>
-                  <div className="p-3">
-                    <h3 className="font-medium">{product.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
+                  <div className="p-2">
+                    <h3 className="font-medium text-sm truncate">{product.name}</h3>
+                    <div className="flex items-center gap-1 mt-1">
                       {product.salePrice ? (
                         <>
-                          <span className="font-bold">${product.salePrice.toFixed(2)}</span>
-                          <span className="text-gray-500 line-through text-sm">${product.price.toFixed(2)}</span>
+                          <span className="font-bold text-sm">${product.salePrice.toFixed(2)}</span>
+                          <span className="text-gray-500 line-through text-xs">${product.price.toFixed(2)}</span>
                         </>
                       ) : (
-                        <span className="font-bold">${product.price.toFixed(2)}</span>
+                        <span className="font-bold text-sm">${product.price.toFixed(2)}</span>
                       )}
                     </div>
                   </div>
