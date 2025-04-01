@@ -13,7 +13,7 @@ const products = [
     name: "Black Boss",
     price: 39.99,
     salePrice: null,
-    imageSrc: "/nikes.webp",
+    imageSrc: "/placeholder.svg?height=300&width=240",
     isNew: true,
     isSale: false,
     slug: "black-boss",
@@ -23,7 +23,7 @@ const products = [
     name: "Get Money",
     price: 49.99,
     salePrice: 39.99,
-    imageSrc: "/fresh-set.webp",
+    imageSrc: "/placeholder.svg?height=300&width=240",
     isNew: false,
     isSale: true,
     slug: "get-money",
@@ -33,7 +33,7 @@ const products = [
     name: "Africa - Tribe Hoodie",
     price: 59.99,
     salePrice: 49.99,
-    imageSrc: "/article-1.webp",
+    imageSrc: "/placeholder.svg?height=300&width=240",
     isNew: false,
     isSale: true,
     slug: "africa-tribe-hoodie",
@@ -43,7 +43,7 @@ const products = [
     name: "Black Hoodie",
     price: 39.99,
     salePrice: null,
-    imageSrc: "/article-2.webp",
+    imageSrc: "/placeholder.svg?height=300&width=240",
     isNew: false,
     isSale: false,
     slug: "black-hoodie",
@@ -53,7 +53,7 @@ const products = [
     name: "Graphic Tee",
     price: 29.99,
     salePrice: null,
-    imageSrc: "/article-3.webp",
+    imageSrc: "/placeholder.svg?height=300&width=240",
     isNew: true,
     isSale: false,
     slug: "graphic-tee",
@@ -63,7 +63,7 @@ const products = [
     name: "Zip-Up Hoodie",
     price: 54.99,
     salePrice: 44.99,
-    imageSrc: "/spaces.webp",
+    imageSrc: "/placeholder.svg?height=300&width=240",
     isNew: false,
     isSale: true,
     slug: "zip-up-hoodie",
@@ -364,3 +364,4 @@ export default function ProductGrid() {
     </div>
   )
 }
+
