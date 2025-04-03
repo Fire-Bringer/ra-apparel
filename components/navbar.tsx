@@ -25,6 +25,9 @@ const productCategories = [
   { name: "Sale", slug: "sale" },
 ]
 
+// Number of items in cart - this would typically come from a cart context
+const cartItemCount = 3
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [menuVisible, setMenuVisible] = useState(false)
@@ -148,7 +151,7 @@ export default function Navbar() {
             <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
               <ShoppingBag className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
+                {cartItemCount}
               </span>
               <span className="sr-only">Cart</span>
             </Button>
@@ -169,7 +172,7 @@ export default function Navbar() {
           <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
             <ShoppingBag className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              3
+              {cartItemCount}
             </span>
             <span className="sr-only">Cart</span>
           </Button>
@@ -283,7 +286,7 @@ export default function Navbar() {
                     <span>Cart</span>
                   </div>
                   <span className="bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    3
+                    {cartItemCount}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
