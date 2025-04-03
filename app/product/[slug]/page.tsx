@@ -6,19 +6,14 @@ import Footer from "@/components/footer"
 import { getProductBySlug } from "@/lib/products"
 import { notFound } from "next/navigation"
 
-// Define the correct type for the page props
-interface ProductPageProps {
-  params: {
-    slug: string
-  }
-}
-
-// Make the page component async to align with Next.js App Router conventions
-export default async function ProductPage({ params }: ProductPageProps) {
-  // Get the product data
+// Define the page component with inline type annotation
+export default function ProductPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const product = getProductBySlug(params.slug)
 
-  // If product not found, show the not-found page
   if (!product) {
     notFound()
   }
