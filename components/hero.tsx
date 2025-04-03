@@ -35,12 +35,12 @@ export default function Hero() {
             More than
             <br />a hustle.
             <br />
-            It's a lifestyle.
+            Its a lifestyle.
           </h1>
 
           {/* Subheading */}
           <p className="text-white text-lg md:text-xl max-w-md mb-8">
-            Whether you're just starting out, or an OG, you get yours before they get theirs.
+            Whether youre just starting out, or an OG, you get yours before they get theirs.
           </p>
 
           {/* Optional CTA Button - Mobile Only */}
@@ -57,4 +57,3 @@ export default function Hero() {
     </section>
   )
 }
-
