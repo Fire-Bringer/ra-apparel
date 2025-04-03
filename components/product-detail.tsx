@@ -15,9 +15,6 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[0])
   const [quantity, setQuantity] = useState(1)
-  const [selectedImage, setSelectedImage] = useState(
-    product.images.find((img) => img.isPrimary)?.src || product.images[0].src,
-  )
 
   const handleQuantityChange = (amount: number) => {
     const newQuantity = quantity + amount
@@ -36,28 +33,35 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     // Here you would typically dispatch to a cart context or make an API call
   }
 
+  // Get the primary product image or the first image if no primary is specified
+  const primaryImage = product.images.find((img) => img.isPrimary) || product.images[0]
+
   return (
     <div className="container px-4 mx-auto py-8">
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Product Images - Mobile Slider */}
+        {/* Product Images - Mobile */}
         <div className="md:hidden w-full">
-          <div className="relative aspect-square mb-4 bg-gray-100">
-            <Image src={selectedImage || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+          <div className="relative aspect-square mb-4 bg-gray-100 overflow-hidden">
+            <Image src={primaryImage.src || "/placeholder.svg"} alt={primaryImage.alt} fill className="object-cover" />
             {product.isNew && <div className="absolute top-3 left-3 bg-black text-white text-xs px-2 py-1">NEW</div>}
             {product.isSale && (
               <div className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1">SALE</div>
             )}
           </div>
           <div className="flex gap-2 overflow-x-auto pb-2">
-            {product.images.map((image, index) => (
+            {[...Array(4)].map((_, index) => (
               <button
                 key={index}
                 className={`relative w-16 h-16 flex-shrink-0 border-2 ${
-                  selectedImage === image.src ? "border-black" : "border-transparent"
-                }`}
-                onClick={() => setSelectedImage(image.src)}
+                  index === 0 ? "border-black" : "border-transparent"
+                } bg-gray-200 overflow-hidden`}
               >
-                <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
+                <Image
+                  src={primaryImage.src || "/placeholder.svg"}
+                  alt={`${primaryImage.alt} thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
               </button>
             ))}
           </div>
@@ -66,20 +70,34 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         {/* Product Images - Desktop Gallery */}
         <div className="hidden md:block md:w-1/2">
           <div className="grid grid-cols-2 gap-4">
-            {product.images.map((image, index) => (
-              <div
-                key={index}
-                className={`relative aspect-square bg-gray-100 ${index === 0 ? "col-span-2 row-span-2" : ""}`}
-              >
-                <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
-                {index === 0 && product.isNew && (
-                  <div className="absolute top-4 left-4 bg-black text-white text-xs px-2 py-1">NEW</div>
-                )}
-                {index === 0 && product.isSale && (
-                  <div className="absolute top-4 right-4 bg-red-500 text-white text-xs px-2 py-1">SALE</div>
-                )}
-              </div>
-            ))}
+            <div className="relative aspect-square bg-gray-100 col-span-2 row-span-2 overflow-hidden">
+              <Image
+                src={primaryImage.src || "/placeholder.svg"}
+                alt={primaryImage.alt}
+                fill
+                className="object-cover"
+              />
+              {product.isNew && <div className="absolute top-4 left-4 bg-black text-white text-xs px-2 py-1">NEW</div>}
+              {product.isSale && (
+                <div className="absolute top-4 right-4 bg-red-500 text-white text-xs px-2 py-1">SALE</div>
+              )}
+            </div>
+            <div className="relative aspect-square bg-gray-100 overflow-hidden">
+              <Image
+                src={primaryImage.src || "/placeholder.svg"}
+                alt={`${primaryImage.alt} view 2`}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-square bg-gray-100 overflow-hidden">
+              <Image
+                src={primaryImage.src || "/placeholder.svg"}
+                alt={`${primaryImage.alt} view 3`}
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -195,3 +213,4 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     </div>
   )
 }
+

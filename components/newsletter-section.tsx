@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import Image from "next/image"
 import { useState } from "react"
 import { Mail } from "lucide-react"
 
@@ -23,13 +22,6 @@ export default function NewsletterSection() {
 
   return (
     <section className="py-16 bg-[#121212] text-white relative overflow-hidden">
-      {/* Desktop Background Image (hidden on mobile) */}
-      <div className="absolute inset-0 hidden md:block opacity-40">
-        <div className="relative w-full h-full">
-          <Image src="/newsletter-bg.webp" alt="Newsletter background" fill priority className="object-cover" />
-        </div>
-      </div>
-
       <div className="container px-4 mx-auto max-w-3xl text-center relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold mb-4">Join Our Newsletter</h2>
         <p className="text-xl mb-10 text-white/90">Sign up for deals, new products and promotions</p>
@@ -60,3 +52,4 @@ export default function NewsletterSection() {
     </section>
   )
 }
+

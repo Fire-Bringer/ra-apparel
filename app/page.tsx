@@ -5,7 +5,7 @@ import FeaturedCarousel from "@/components/featured-carousel"
 import CategoriesSection from "@/components/categories-section"
 import LimitedEdition from "@/components/limited-edition"
 import CollectionsSection from "@/components/collections-section"
-import LatestArticles from "@/components/latest-articles"
+import LatestProducts from "@/components/latest-products"
 import NewsletterSection from "@/components/newsletter-section"
 import SmsPlug from "@/components/sms-plug"
 import Footer from "@/components/footer"
@@ -22,7 +22,7 @@ export default function Home() {
         <CategoriesSection />
         <LimitedEdition />
         <CollectionsSection />
-        <LatestArticles />
+        <LatestProducts />
         <NewsletterSection />
         <SmsPlug />
         {/* Additional homepage content would go here */}

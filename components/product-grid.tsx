@@ -1,92 +1,34 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
+import Image from "next/image"
 import { ChevronDown, ChevronUp, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { products } from "@/lib/products"
 
-// Sample product data
-const products = [
-  {
-    id: "1",
-    name: "Black Boss",
-    price: 39.99,
-    salePrice: null,
-    imageSrc: "/placeholder.svg?height=300&width=240",
-    isNew: true,
-    isSale: false,
-    slug: "black-boss",
-  },
-  {
-    id: "2",
-    name: "Get Money",
-    price: 49.99,
-    salePrice: 39.99,
-    imageSrc: "/placeholder.svg?height=300&width=240",
-    isNew: false,
-    isSale: true,
-    slug: "get-money",
-  },
-  {
-    id: "3",
-    name: "Africa - Tribe Hoodie",
-    price: 59.99,
-    salePrice: 49.99,
-    imageSrc: "/placeholder.svg?height=300&width=240",
-    isNew: false,
-    isSale: true,
-    slug: "africa-tribe-hoodie",
-  },
-  {
-    id: "4",
-    name: "Black Hoodie",
-    price: 39.99,
-    salePrice: null,
-    imageSrc: "/placeholder.svg?height=300&width=240",
-    isNew: false,
-    isSale: false,
-    slug: "black-hoodie",
-  },
-  {
-    id: "5",
-    name: "Graphic Tee",
-    price: 29.99,
-    salePrice: null,
-    imageSrc: "/placeholder.svg?height=300&width=240",
-    isNew: true,
-    isSale: false,
-    slug: "graphic-tee",
-  },
-  {
-    id: "6",
-    name: "Zip-Up Hoodie",
-    price: 54.99,
-    salePrice: 44.99,
-    imageSrc: "/placeholder.svg?height=300&width=240",
-    isNew: false,
-    isSale: true,
-    slug: "zip-up-hoodie",
-  },
-]
+// Use all products for the categories page
+const categoryProducts = products
 
 // Category options
 const categoryOptions = [
   { id: "all-fits", label: "All Fits" },
+  { id: "outfits", label: "Complete Outfits" },
+  { id: "shoes", label: "Shoes" },
+  { id: "jerseys", label: "Jerseys" },
+  { id: "sweatshirts", label: "Sweatshirts" },
   { id: "hoodies", label: "Hoodies" },
-  { id: "sweatsuits", label: "Sweatsuits" },
-  { id: "tracksuits", label: "Tracksuits" },
+  { id: "longsleeves", label: "Long Sleeves" },
   { id: "tshirts", label: "T-Shirts" },
-  { id: "zipups", label: "Zip-Ups" },
 ]
 
 // Price options
 const priceOptions = [
   { id: "all-prices", label: "All Prices" },
-  { id: "price-1", label: "$0 - $25" },
-  { id: "price-2", label: "$25 - $50" },
-  { id: "price-3", label: "$50 - $100" },
-  { id: "price-4", label: "$100+" },
+  { id: "price-1", label: "$0 - $50" },
+  { id: "price-2", label: "$50 - $100" },
+  { id: "price-3", label: "$100 - $200" },
+  { id: "price-4", label: "$200+" },
 ]
 
 export default function ProductGrid() {
@@ -95,7 +37,7 @@ export default function ProductGrid() {
     price: false,
   })
   const [showMobileFilters, setShowMobileFilters] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState("hoodies")
+  const [selectedCategory, setSelectedCategory] = useState("all-fits")
   const [selectedPrice, setSelectedPrice] = useState("all-prices")
 
   const toggleFilter = (filter: string) => {
@@ -133,7 +75,7 @@ export default function ProductGrid() {
                 onClick={() => toggleFilter("categories")}
               >
                 <span className="font-medium text-lg">
-                  {categoryOptions.find((cat) => cat.id === selectedCategory)?.label || "Hoodies"}
+                  {categoryOptions.find((cat) => cat.id === selectedCategory)?.label || "All Fits"}
                 </span>
                 <ChevronDown className="h-5 w-5 text-gray-500" />
               </button>
@@ -213,28 +155,32 @@ export default function ProductGrid() {
             {openFilters.categories && (
               <div className="space-y-2 pl-2">
                 <div className="flex items-center">
+                  <input type="checkbox" id="outfits" className="mr-2" />
+                  <label htmlFor="outfits">Complete Outfits</label>
+                </div>
+                <div className="flex items-center">
+                  <input type="checkbox" id="shoes" className="mr-2" />
+                  <label htmlFor="shoes">Shoes</label>
+                </div>
+                <div className="flex items-center">
+                  <input type="checkbox" id="jerseys" className="mr-2" />
+                  <label htmlFor="jerseys">Jerseys</label>
+                </div>
+                <div className="flex items-center">
+                  <input type="checkbox" id="sweatshirts" className="mr-2" />
+                  <label htmlFor="sweatshirts">Sweatshirts</label>
+                </div>
+                <div className="flex items-center">
                   <input type="checkbox" id="hoodies" className="mr-2" />
                   <label htmlFor="hoodies">Hoodies</label>
                 </div>
                 <div className="flex items-center">
+                  <input type="checkbox" id="longsleeves" className="mr-2" />
+                  <label htmlFor="longsleeves">Long Sleeves</label>
+                </div>
+                <div className="flex items-center">
                   <input type="checkbox" id="tshirts" className="mr-2" />
                   <label htmlFor="tshirts">T-Shirts</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="sweatsuits" className="mr-2" />
-                  <label htmlFor="sweatsuits">Sweatsuits</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="tracksuits" className="mr-2" />
-                  <label htmlFor="tracksuits">Tracksuits</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="zipups" className="mr-2" />
-                  <label htmlFor="zipups">Zip-Ups</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="bombers" className="mr-2" />
-                  <label htmlFor="bombers">Bomber Jackets</label>
                 </div>
               </div>
             )}
@@ -252,19 +198,19 @@ export default function ProductGrid() {
               <div className="space-y-2 pl-2">
                 <div className="flex items-center">
                   <input type="checkbox" id="price-1" className="mr-2" />
-                  <label htmlFor="price-1">$0 - $25</label>
+                  <label htmlFor="price-1">$0 - $50</label>
                 </div>
                 <div className="flex items-center">
                   <input type="checkbox" id="price-2" className="mr-2" />
-                  <label htmlFor="price-2">$25 - $50</label>
+                  <label htmlFor="price-2">$50 - $100</label>
                 </div>
                 <div className="flex items-center">
                   <input type="checkbox" id="price-3" className="mr-2" />
-                  <label htmlFor="price-3">$50 - $100</label>
+                  <label htmlFor="price-3">$100 - $200</label>
                 </div>
                 <div className="flex items-center">
                   <input type="checkbox" id="price-4" className="mr-2" />
-                  <label htmlFor="price-4">$100+</label>
+                  <label htmlFor="price-4">$200+</label>
                 </div>
               </div>
             )}
@@ -276,7 +222,7 @@ export default function ProductGrid() {
           <div className="hidden md:flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Products</h2>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">Showing {products.length} products</span>
+              <span className="text-sm text-gray-500">Showing {categoryProducts.length} products</span>
               <select className="border rounded-md px-2 py-1 text-sm">
                 <option>Sort by: Featured</option>
                 <option>Price: Low to High</option>
@@ -286,15 +232,15 @@ export default function ProductGrid() {
             </div>
           </div>
 
-          {/* Mobile Product Grid (2 columns) - Updated from 1 column to 2 columns */}
+          {/* Mobile Product Grid (2 columns) */}
           <div className="grid grid-cols-2 gap-3 md:hidden">
-            {products.map((product) => (
+            {categoryProducts.map((product) => (
               <Link key={product.id} href={`/product/${product.slug}`} className="block">
                 <div className="border border-gray-300 rounded-md overflow-hidden">
-                  <div className="relative aspect-square">
+                  <div className="relative aspect-square bg-gray-100">
                     <Image
-                      src={product.imageSrc || "/placeholder.svg"}
-                      alt={product.name}
+                      src={product.images[0].src || "/placeholder.svg"}
+                      alt={product.images[0].alt}
                       fill
                       className="object-cover"
                     />
@@ -325,13 +271,13 @@ export default function ProductGrid() {
 
           {/* Desktop Product Grid (3 columns) */}
           <div className="hidden md:grid grid-cols-3 gap-6">
-            {products.map((product) => (
+            {categoryProducts.map((product) => (
               <Link key={product.id} href={`/product/${product.slug}`} className="block group">
                 <div className="border border-gray-300 rounded-md overflow-hidden">
-                  <div className="relative aspect-square">
+                  <div className="relative aspect-square bg-gray-100">
                     <Image
-                      src={product.imageSrc || "/placeholder.svg"}
-                      alt={product.name}
+                      src={product.images[0].src || "/placeholder.svg"}
+                      alt={product.images[0].alt}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />

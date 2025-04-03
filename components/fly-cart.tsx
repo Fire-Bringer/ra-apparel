@@ -14,7 +14,6 @@ const initialCartItems = [
     price: 19.19,
     color: "Black",
     quantity: 2,
-    imageSrc: "/placeholder.svg?height=80&width=80",
   },
   {
     id: "2",
@@ -22,7 +21,6 @@ const initialCartItems = [
     price: 19.19,
     color: "Red",
     quantity: 2,
-    imageSrc: "/placeholder.svg?height=80&width=80",
   },
   {
     id: "3",
@@ -30,7 +28,6 @@ const initialCartItems = [
     price: 39.0,
     color: "Gold",
     quantity: 2,
-    imageSrc: "/placeholder.svg?height=80&width=80",
   },
 ]
 

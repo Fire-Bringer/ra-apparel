@@ -7,21 +7,21 @@ const collections = [
     id: "1",
     name: "Couple Fits",
     description: "Perfect for you and your partner",
-    imageSrc: "/couple-fits-new.webp",
+    imageSrc: "/couple-fits-collection.webp",
     slug: "couple-fits",
   },
   {
     id: "2",
     name: "Men's Fits",
     description: "Stylish options for him",
-    imageSrc: "/mens-fits-new.webp",
+    imageSrc: "/mens-fits-collection.webp",
     slug: "mens-fits",
   },
   {
     id: "3",
     name: "Women's Fits",
     description: "Trendy looks for her",
-    imageSrc: "/womens-fits-new.webp",
+    imageSrc: "/womens-fits-collection.webp",
     slug: "womens-fits",
   },
 ]
@@ -41,13 +41,7 @@ export default function CollectionsSection() {
                   src={collection.imageSrc || "/placeholder.svg"}
                   alt={collection.name}
                   fill
-                  className={`object-cover ${
-                    collection.id === "2"
-                      ? "object-[70%_center]"
-                      : collection.id === "3"
-                        ? "object-[20%_center]"
-                        : "object-center"
-                  }`}
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-6 text-white">

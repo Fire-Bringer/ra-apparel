@@ -19,10 +19,10 @@ export default function RelatedProducts({ currentProductId }: RelatedProductsPro
           {relatedProducts.map((product) => (
             <Link key={product.id} href={`/product/${product.slug}`} className="block">
               <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
-                <div className="relative aspect-square">
+                <div className="relative aspect-square bg-gray-100 overflow-hidden">
                   <Image
                     src={product.images[0].src || "/placeholder.svg"}
-                    alt={product.name}
+                    alt={product.images[0].alt}
                     fill
                     className="object-cover"
                   />
@@ -56,10 +56,10 @@ export default function RelatedProducts({ currentProductId }: RelatedProductsPro
           {relatedProducts.map((product) => (
             <Link key={product.id} href={`/product/${product.slug}`} className="block group">
               <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
-                <div className="relative aspect-square">
+                <div className="relative aspect-square bg-gray-100 overflow-hidden">
                   <Image
                     src={product.images[0].src || "/placeholder.svg"}
-                    alt={product.name}
+                    alt={product.images[0].alt}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -91,3 +91,4 @@ export default function RelatedProducts({ currentProductId }: RelatedProductsPro
     </section>
   )
 }
+
