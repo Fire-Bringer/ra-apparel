@@ -29,32 +29,30 @@ export default function LimitedEdition() {
           <div className="hidden md:flex w-full md:w-5/12 justify-center">
             <div className="grid grid-cols-2 gap-3 w-full">
               {/* First Image (Top Left) */}
-              <div className="relative aspect-[3/4]">
+              <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
-                  src="/limited-edition-new.webp"
-                  alt="Limited Edition Pink Hoodie - Front View"
+                  src="/limited-section-model1.webp"
+                  alt="Model wearing pink hoodie"
                   fill
                   className="object-cover"
-                  style={{ objectPosition: "60% center" }}
                 />
               </div>
 
               {/* Second Image (Top Right) */}
-              <div className="relative aspect-[3/4]">
+              <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
-                  src="/portrait3.webp"
-                  alt="Limited Edition Pink Hoodie - Side View"
+                  src="/limited-section-model2.webp"
+                  alt="Model with blue shirt draped over shoulders"
                   fill
                   className="object-cover"
-                  style={{ objectPosition: "40% center" }}
                 />
               </div>
 
               {/* Third Image (Bottom, Spanning Full Width) */}
-              <div className="relative aspect-[16/9] col-span-2 mt-3">
+              <div className="relative aspect-[16/9] col-span-2 mt-3 overflow-hidden">
                 <Image
-                  src="/limited3.webp"
-                  alt="Limited Edition Pink Hoodie - Detail View"
+                  src="/limited-section-model3.webp"
+                  alt="Model wearing denim jacket in urban setting"
                   fill
                   className="object-cover"
                   style={{ objectPosition: "50% 30%" }}
@@ -65,13 +63,13 @@ export default function LimitedEdition() {
 
           {/* Image - Mobile Version (hidden on desktop) - Keep single image for mobile */}
           <div className="flex md:hidden w-full justify-center">
-            <div className="relative w-full max-w-sm aspect-[3/4]">
+            <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden">
               <Image
-                src="/limited-edition-new.webp"
-                alt="Limited Edition Pink Hoodie"
+                src="/limited-section-model1.webp"
+                alt="Model wearing pink hoodie"
                 fill
                 className="object-cover"
-                style={{ objectPosition: "60% center" }}
+                style={{ objectPosition: "50% 20%" }}
               />
             </div>
           </div>
@@ -80,3 +78,4 @@ export default function LimitedEdition() {
     </section>
   )
 }
+

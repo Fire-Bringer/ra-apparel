@@ -2,7 +2,6 @@ import Navbar from "@/components/navbar"
 import NavbarSpacer from "@/components/navbar-spacer"
 import ShopBanner from "@/components/shop-banner"
 import ProductGrid from "@/components/product-grid"
-import NewsletterSection from "@/components/newsletter-section"
 import Footer from "@/components/footer"
 
 export default function CategoriesPage() {
@@ -14,7 +13,6 @@ export default function CategoriesPage() {
       <main className="flex-grow">
         <ShopBanner />
         <ProductGrid />
-        <NewsletterSection />
       </main>
       <Footer />
     </div>

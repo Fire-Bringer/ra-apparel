@@ -1,70 +1,14 @@
 "use client"
 
 import { useState, useRef } from "react"
-import Image from "next/image"
 import Link from "next/link"
+import Image from "next/image"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { products } from "@/lib/products"
 
-// Sample product data
-const products = [
-  {
-    id: "1",
-    name: "Black Boss",
-    price: 39.0,
-    imageSrc: "/nikes.webp",
-    isHot: true,
-    slug: "black-boss",
-  },
-  {
-    id: "2",
-    name: "Get Money",
-    price: 39.0,
-    imageSrc: "/long-sleeve.webp",
-    isHot: true,
-    slug: "get-money",
-  },
-  {
-    id: "3",
-    name: "Africa - Tribe Hoodie",
-    price: 49.0,
-    imageSrc: "/fresh-set.webp",
-    isHot: false,
-    slug: "africa-tribe-hoodie-1",
-  },
-  {
-    id: "4",
-    name: "Africa - Tribe Hoodie",
-    price: 49.0,
-    imageSrc: "/article-2.webp",
-    isHot: false,
-    slug: "africa-tribe-hoodie-2",
-  },
-  {
-    id: "5",
-    name: "Africa - Tribe Hoodie",
-    price: 49.0,
-    imageSrc: "/article-3.webp",
-    isHot: false,
-    slug: "africa-tribe-hoodie-3",
-  },
-  {
-    id: "6",
-    name: "T-Shirt",
-    price: 24.99,
-    imageSrc: "/article-1.webp",
-    isHot: true,
-    slug: "t-shirt",
-  },
-  {
-    id: "7",
-    name: "Sweatshirt",
-    price: 44.99,
-    imageSrc: "/new-hoodie-image.webp",
-    isHot: false,
-    slug: "sweatshirt",
-  },
-]
+// Use all products for the featured carousel
+const featuredProducts = products
 
 export default function FeaturedCarousel() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -135,23 +79,34 @@ export default function FeaturedCarousel() {
           className="flex overflow-x-auto gap-4 pb-4 hide-scrollbar"
           onScroll={handleScroll}
         >
-          {products.map((product) => (
+          {featuredProducts.map((product) => (
             <div key={product.id} className="flex-shrink-0 w-[160px] md:w-[200px]">
               <div className="relative group">
                 <div className="relative aspect-[4/5] bg-gray-100 mb-2 overflow-hidden">
                   <Image
-                    src={product.imageSrc || "/placeholder.svg?height=300&width=240"}
-                    alt={product.name}
+                    src={product.images[0].src || "/placeholder.svg"}
+                    alt={product.images[0].alt}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {product.isHot && (
-                    <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1">HOT</div>
+                  {product.isNew && (
+                    <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1">NEW</div>
                   )}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                  {product.isSale && (
+                    <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1">SALE</div>
+                  )}
                 </div>
                 <h3 className="font-medium text-sm">{product.name}</h3>
-                <p className="text-sm">${product.price.toFixed(2)}</p>
+                <p className="text-sm">
+                  {product.salePrice ? (
+                    <>
+                      <span className="font-medium">${product.salePrice.toFixed(2)}</span>{" "}
+                      <span className="text-gray-500 line-through">${product.price.toFixed(2)}</span>
+                    </>
+                  ) : (
+                    `$${product.price.toFixed(2)}`
+                  )}
+                </p>
                 <Link
                   href={`/product/${product.slug}`}
                   className="absolute inset-0"
@@ -167,7 +122,7 @@ export default function FeaturedCarousel() {
         {/* Mobile Pagination Dots */}
         <div className="flex justify-center mt-4 md:hidden">
           <div className="flex gap-1">
-            {[...Array(5)].map((_, i) => (
+            {[...Array(3)].map((_, i) => (
               <div key={i} className={`h-1 rounded-full ${i === 0 ? "w-4 bg-black" : "w-1 bg-gray-300"}`}></div>
             ))}
           </div>
@@ -176,3 +131,4 @@ export default function FeaturedCarousel() {
     </section>
   )
 }
+

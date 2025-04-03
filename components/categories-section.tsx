@@ -6,38 +6,38 @@ const categories = [
   {
     id: "1",
     name: "Hoodies",
-    imageSrc: "/new-hoodie.webp",
     slug: "hoodies",
+    imageSrc: "/hoodie-category.webp",
   },
   {
     id: "2",
     name: "Tracksuits",
-    imageSrc: "/tracksuit-new.webp",
     slug: "tracksuits",
+    imageSrc: "/tracksuit-category.webp",
   },
   {
     id: "3",
     name: "Sweatsuits",
-    imageSrc: "/sweatsuit-new.webp",
     slug: "sweatsuits",
+    imageSrc: "/sweatsuit-category.webp",
   },
   {
     id: "4",
     name: "T-Shirts",
-    imageSrc: "/tshirt-new.webp",
     slug: "t-shirts",
+    imageSrc: "/black-tshirt.webp",
   },
   {
     id: "5",
     name: "Zip-Ups",
-    imageSrc: "/zipup-new.webp",
     slug: "zip-ups",
+    imageSrc: "/zipup-collection.webp",
   },
   {
     id: "6",
     name: "Bomber Jackets",
-    imageSrc: "/bomber-jacket-new.webp",
     slug: "bomber-jackets",
+    imageSrc: "/bomber-jacket-category.webp",
   },
 ]
 
@@ -52,12 +52,12 @@ export default function CategoriesSection() {
           {categories.map((category) => (
             <Link key={category.id} href="/categories" className="block group">
               <div className="bg-white p-4 rounded-md overflow-hidden">
-                <div className="aspect-square relative overflow-hidden">
+                <div className="aspect-square relative overflow-hidden bg-gray-100">
                   <Image
                     src={category.imageSrc || "/placeholder.svg"}
                     alt={category.name}
                     fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <h3 className="text-center font-medium text-lg mt-4">{category.name}</h3>
@@ -71,12 +71,12 @@ export default function CategoriesSection() {
           {categories.map((category) => (
             <Link key={category.id} href="/categories" className="block group">
               <div className="bg-white p-3 rounded-md overflow-hidden">
-                <div className="aspect-square relative overflow-hidden">
+                <div className="aspect-square relative overflow-hidden bg-gray-100">
                   <Image
                     src={category.imageSrc || "/placeholder.svg"}
                     alt={category.name}
                     fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover"
                   />
                 </div>
                 <h3 className="text-center font-medium text-sm mt-2">{category.name}</h3>

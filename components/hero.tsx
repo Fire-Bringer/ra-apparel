@@ -1,17 +1,20 @@
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Hero() {
+  // Adjusted objectPosition from default (50% 50%) to crop higher (50% 20%)
   return (
     <section className="relative w-full h-[100vh] md:h-[80vh] overflow-hidden">
-      {/* Hero Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero1%201-xlTFltk4R6mwWETU3JZwLFysYyl5Lb.png')",
-          backgroundPosition: "center top 10%",
-        }}
-      >
+      {/* Hero Background Image - Adjusted to crop higher */}
+      <div className="absolute inset-0">
+        <Image
+          src="/homepage-hero.webp"
+          alt="Group of people in stylish streetwear fashion"
+          fill
+          priority
+          className="object-cover"
+          style={{ objectPosition: "50% 20%" }}
+        />
         {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40"></div>
       </div>

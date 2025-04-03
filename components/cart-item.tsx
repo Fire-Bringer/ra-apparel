@@ -1,7 +1,6 @@
 "use client"
 
-import Image from "next/image"
-import { Minus, Plus, X } from "lucide-react"
+import { Minus, Plus, X, ShoppingBag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface CartItemProps {
@@ -10,32 +9,16 @@ interface CartItemProps {
   price: number
   color: string
   quantity: number
-  imageSrc: string
   onRemove: (id: string) => void
   onUpdateQuantity: (id: string, quantity: number) => void
 }
 
-export default function CartItem({
-  id,
-  name,
-  price,
-  color,
-  quantity,
-  imageSrc,
-  onRemove,
-  onUpdateQuantity,
-}: CartItemProps) {
+export default function CartItem({ id, name, price, color, quantity, onRemove, onUpdateQuantity }: CartItemProps) {
   return (
     <div className="py-6 first:pt-0 border-b border-gray-200 last:border-0">
       <div className="flex items-start">
-        <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded bg-gray-100">
-          <Image
-            src={imageSrc || "/placeholder.svg"}
-            alt={name}
-            width={80}
-            height={80}
-            className="h-full w-full object-cover object-center"
-          />
+        <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded bg-gray-100 flex items-center justify-center">
+          <ShoppingBag className="h-8 w-8 text-gray-400" />
         </div>
 
         <div className="ml-4 flex flex-1 flex-col">
