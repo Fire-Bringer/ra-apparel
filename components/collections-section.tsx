@@ -35,7 +35,7 @@ export default function CollectionsSection() {
         {/* Mobile Layout (Vertical Stack) */}
         <div className="md:hidden space-y-6">
           {collections.map((collection) => (
-            <Link key={collection.id} href={`/collections/${collection.slug}`} className="block">
+            <Link key={collection.id} href={`/categories?category=${collection.slug}`} className="block">
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
                   src={collection.imageSrc || "/placeholder.svg"}
@@ -58,7 +58,7 @@ export default function CollectionsSection() {
         <div className="hidden md:grid grid-cols-12 gap-6">
           {/* First collection (large) */}
           <div className="col-span-12 lg:col-span-6">
-            <Link href={`/collections/${collections[0].slug}`} className="block">
+            <Link href={`/categories?category=${collections[0].slug}`} className="block">
               <div className="relative aspect-[4/5] overflow-hidden">
                 <Image
                   src={collections[0].imageSrc || "/placeholder.svg"}
@@ -79,7 +79,7 @@ export default function CollectionsSection() {
           {/* Second and third collections (stacked vertically) */}
           <div className="col-span-12 lg:col-span-6 space-y-6">
             {collections.slice(1).map((collection) => (
-              <Link key={collection.id} href={`/collections/${collection.slug}`} className="block">
+              <Link key={collection.id} href={`/categories?category=${collection.slug}`} className="block">
                 <div className="relative aspect-[16/9] overflow-hidden">
                   <Image
                     src={collection.imageSrc || "/placeholder.svg"}

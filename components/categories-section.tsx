@@ -50,7 +50,7 @@ export default function CategoriesSection() {
         {/* Desktop Grid (3 columns) */}
         <div className="hidden md:grid grid-cols-3 gap-6">
           {categories.map((category) => (
-            <Link key={category.id} href="/categories" className="block group">
+            <Link key={category.id} href={`/categories?category=${category.slug}`} className="block group">
               <div className="bg-white p-4 rounded-md overflow-hidden">
                 <div className="aspect-square relative overflow-hidden bg-gray-100">
                   <Image
@@ -69,7 +69,7 @@ export default function CategoriesSection() {
         {/* Mobile Grid (2 columns) */}
         <div className="grid grid-cols-2 gap-4 md:hidden">
           {categories.map((category) => (
-            <Link key={category.id} href="/categories" className="block group">
+            <Link key={category.id} href={`/categories?category=${category.slug}`} className="block group">
               <div className="bg-white p-3 rounded-md overflow-hidden">
                 <div className="aspect-square relative overflow-hidden bg-gray-100">
                   <Image

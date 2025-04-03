@@ -84,18 +84,23 @@ export default function Navbar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>
-                  <Link href="/shop/men" className="w-full">
-                    Men
+                  <Link href="/categories?category=hoodies" className="w-full">
+                    Hoodies
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/shop/women" className="w-full">
-                    Women
+                  <Link href="/categories?category=tracksuits" className="w-full">
+                    Tracksuits
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/shop/accessories" className="w-full">
-                    Accessories
+                  <Link href="/categories?category=t-shirts" className="w-full">
+                    T-Shirts
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/categories?category=shoes" className="w-full">
+                    Shoes
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -216,18 +221,39 @@ export default function Navbar() {
                     {expandedSections.shop && (
                       <ul className="pl-4 mt-2 space-y-2">
                         <li>
-                          <Link href="/shop/men" className="block py-1" onClick={() => setIsMenuOpen(false)}>
-                            Men
+                          <Link
+                            href="/categories?category=hoodies"
+                            className="block py-1"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Hoodies
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop/women" className="block py-1" onClick={() => setIsMenuOpen(false)}>
-                            Women
+                          <Link
+                            href="/categories?category=tracksuits"
+                            className="block py-1"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Tracksuits
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop/accessories" className="block py-1" onClick={() => setIsMenuOpen(false)}>
-                            Accessories
+                          <Link
+                            href="/categories?category=t-shirts"
+                            className="block py-1"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            T-Shirts
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/categories?category=shoes"
+                            className="block py-1"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Shoes
                           </Link>
                         </li>
                       </ul>

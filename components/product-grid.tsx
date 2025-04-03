@@ -1,25 +1,27 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ChevronDown, ChevronUp, Filter } from "lucide-react"
+import { ChevronDown, ChevronUp, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { products } from "@/lib/products"
-
-// Use all products for the categories page
-const categoryProducts = products
+import { useRouter, useSearchParams } from "next/navigation"
 
 // Category options
 const categoryOptions = [
-  { id: "all-fits", label: "All Fits" },
-  { id: "outfits", label: "Complete Outfits" },
-  { id: "shoes", label: "Shoes" },
-  { id: "jerseys", label: "Jerseys" },
-  { id: "sweatshirts", label: "Sweatshirts" },
-  { id: "hoodies", label: "Hoodies" },
-  { id: "longsleeves", label: "Long Sleeves" },
-  { id: "tshirts", label: "T-Shirts" },
+  { id: "all-fits", label: "All Fits", slug: "all-fits" },
+  { id: "outfits", label: "Complete Outfits", slug: "outfits" },
+  { id: "shoes", label: "Shoes", slug: "shoes" },
+  { id: "jerseys", label: "Jerseys", slug: "jerseys" },
+  { id: "sweatshirts", label: "Sweatshirts", slug: "sweatshirts" },
+  { id: "hoodies", label: "Hoodies", slug: "hoodies" },
+  { id: "longsleeves", label: "Long Sleeves", slug: "longsleeves" },
+  { id: "t-shirts", label: "T-Shirts", slug: "t-shirts" },
+  { id: "tracksuits", label: "Tracksuits", slug: "tracksuits" },
+  { id: "sweatsuits", label: "Sweatsuits", slug: "sweatsuits" },
+  { id: "zip-ups", label: "Zip-Ups", slug: "zip-ups" },
+  { id: "bomber-jackets", label: "Bomber Jackets", slug: "bomber-jackets" },
 ]
 
 // Price options
@@ -31,14 +33,90 @@ const priceOptions = [
   { id: "price-4", label: "$200+" },
 ]
 
-export default function ProductGrid() {
+interface ProductGridProps {
+  initialCategory?: string
+}
+
+export default function ProductGrid({ initialCategory }: ProductGridProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
   const [openFilters, setOpenFilters] = useState<Record<string, boolean>>({
     categories: false,
     price: false,
   })
   const [showMobileFilters, setShowMobileFilters] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState("all-fits")
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory || "all-fits")
   const [selectedPrice, setSelectedPrice] = useState("all-prices")
+  const [filteredProducts, setFilteredProducts] = useState(products)
+
+  // Update URL when filters change
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (selectedCategory && selectedCategory !== "all-fits") {
+      params.set("category", selectedCategory)
+    } else {
+      params.delete("category")
+    }
+
+    if (selectedPrice && selectedPrice !== "all-prices") {
+      params.set("price", selectedPrice)
+    } else {
+      params.delete("price")
+    }
+
+    router.push(`/categories?${params.toString()}`, { scroll: false })
+  }, [selectedCategory, selectedPrice, router, searchParams])
+
+  // Filter products based on selected category and price
+  useEffect(() => {
+    let filtered = [...products]
+
+    // Filter by category
+    if (selectedCategory && selectedCategory !== "all-fits") {
+      filtered = filtered.filter((product) => {
+        // Map category slugs to product categories
+        const categoryMap: Record<string, string> = {
+          hoodies: "hoodies",
+          tracksuits: "tracksuits",
+          sweatsuits: "sweatshirts", // Mapping sweatsuits to sweatshirts
+          "t-shirts": "tshirts",
+          "zip-ups": "longsleeves", // Mapping zip-ups to longsleeves
+          "bomber-jackets": "outfits", // Mapping bomber jackets to outfits
+          shoes: "shoes",
+          jerseys: "jerseys",
+          outfits: "outfits",
+          longsleeves: "longsleeves",
+        }
+
+        return (
+          product.category === categoryMap[selectedCategory] ||
+          product.category.includes(selectedCategory.replace("-", ""))
+        )
+      })
+    }
+
+    // Filter by price
+    if (selectedPrice && selectedPrice !== "all-prices") {
+      const priceRanges = {
+        "price-1": { min: 0, max: 50 },
+        "price-2": { min: 50, max: 100 },
+        "price-3": { min: 100, max: 200 },
+        "price-4": { min: 200, max: Number.POSITIVE_INFINITY },
+      }
+
+      const range = priceRanges[selectedPrice as keyof typeof priceRanges]
+      if (range) {
+        filtered = filtered.filter((product) => {
+          const price = product.salePrice || product.price
+          return price >= range.min && price < range.max
+        })
+      }
+    }
+
+    setFilteredProducts(filtered)
+  }, [selectedCategory, selectedPrice])
 
   const toggleFilter = (filter: string) => {
     setOpenFilters((prev) => ({
@@ -46,6 +124,10 @@ export default function ProductGrid() {
       [filter]: !prev[filter],
     }))
   }
+
+  // Find the category label for display
+  const selectedCategoryLabel = categoryOptions.find((cat) => cat.slug === selectedCategory)?.label || "All Fits"
+  const selectedPriceLabel = priceOptions.find((price) => price.id === selectedPrice)?.label || "All Prices"
 
   return (
     <div className="container px-4 mx-auto py-8">
@@ -63,7 +145,29 @@ export default function ProductGrid() {
         </Button>
       </div>
 
-      {/* Mobile Filters (Collapsible) - Updated to match Figma with darker borders */}
+      {/* Active Filters Display */}
+      {(selectedCategory !== "all-fits" || selectedPrice !== "all-prices") && (
+        <div className="flex flex-wrap gap-2 mb-4">
+          {selectedCategory !== "all-fits" && (
+            <div className="flex items-center bg-gray-100 px-3 py-1 rounded-full text-sm">
+              Category: {selectedCategoryLabel}
+              <button onClick={() => setSelectedCategory("all-fits")} className="ml-2">
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          )}
+          {selectedPrice !== "all-prices" && (
+            <div className="flex items-center bg-gray-100 px-3 py-1 rounded-full text-sm">
+              Price: {selectedPriceLabel}
+              <button onClick={() => setSelectedPrice("all-prices")} className="ml-2">
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Mobile Filters (Collapsible) */}
       {showMobileFilters && (
         <div className="p-4 mb-6 md:hidden">
           {/* Categories Section */}
@@ -74,9 +178,7 @@ export default function ProductGrid() {
                 className="flex items-center justify-between w-full p-4 border border-gray-400 rounded-lg"
                 onClick={() => toggleFilter("categories")}
               >
-                <span className="font-medium text-lg">
-                  {categoryOptions.find((cat) => cat.id === selectedCategory)?.label || "All Fits"}
-                </span>
+                <span className="font-medium text-lg">{selectedCategoryLabel}</span>
                 <ChevronDown className="h-5 w-5 text-gray-500" />
               </button>
             </div>
@@ -87,10 +189,10 @@ export default function ProductGrid() {
                   <button
                     key={category.id}
                     className={`w-full text-left p-4 ${
-                      selectedCategory === category.id ? "bg-gray-100 font-medium" : "text-gray-600"
+                      selectedCategory === category.slug ? "bg-gray-100 font-medium" : "text-gray-600"
                     }`}
                     onClick={() => {
-                      setSelectedCategory(category.id)
+                      setSelectedCategory(category.slug)
                       toggleFilter("categories")
                     }}
                   >
@@ -109,9 +211,7 @@ export default function ProductGrid() {
                 className="flex items-center justify-between w-full p-4 border border-gray-400 rounded-lg"
                 onClick={() => toggleFilter("price")}
               >
-                <span className="font-medium text-lg">
-                  {priceOptions.find((price) => price.id === selectedPrice)?.label || "All Prices"}
-                </span>
+                <span className="font-medium text-lg">{selectedPriceLabel}</span>
                 <ChevronDown className="h-5 w-5 text-gray-500" />
               </button>
             </div>
@@ -154,34 +254,20 @@ export default function ProductGrid() {
             </button>
             {openFilters.categories && (
               <div className="space-y-2 pl-2">
-                <div className="flex items-center">
-                  <input type="checkbox" id="outfits" className="mr-2" />
-                  <label htmlFor="outfits">Complete Outfits</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="shoes" className="mr-2" />
-                  <label htmlFor="shoes">Shoes</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="jerseys" className="mr-2" />
-                  <label htmlFor="jerseys">Jerseys</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="sweatshirts" className="mr-2" />
-                  <label htmlFor="sweatshirts">Sweatshirts</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="hoodies" className="mr-2" />
-                  <label htmlFor="hoodies">Hoodies</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="longsleeves" className="mr-2" />
-                  <label htmlFor="longsleeves">Long Sleeves</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="tshirts" className="mr-2" />
-                  <label htmlFor="tshirts">T-Shirts</label>
-                </div>
+                {categoryOptions.map((category) => (
+                  <div key={category.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={category.id}
+                      className="mr-2"
+                      checked={selectedCategory === category.slug}
+                      onChange={() =>
+                        setSelectedCategory(selectedCategory === category.slug ? "all-fits" : category.slug)
+                      }
+                    />
+                    <label htmlFor={category.id}>{category.label}</label>
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -196,22 +282,18 @@ export default function ProductGrid() {
             </button>
             {openFilters.price && (
               <div className="space-y-2 pl-2">
-                <div className="flex items-center">
-                  <input type="checkbox" id="price-1" className="mr-2" />
-                  <label htmlFor="price-1">$0 - $50</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="price-2" className="mr-2" />
-                  <label htmlFor="price-2">$50 - $100</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="price-3" className="mr-2" />
-                  <label htmlFor="price-3">$100 - $200</label>
-                </div>
-                <div className="flex items-center">
-                  <input type="checkbox" id="price-4" className="mr-2" />
-                  <label htmlFor="price-4">$200+</label>
-                </div>
+                {priceOptions.map((price) => (
+                  <div key={price.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={price.id}
+                      className="mr-2"
+                      checked={selectedPrice === price.id}
+                      onChange={() => setSelectedPrice(selectedPrice === price.id ? "all-prices" : price.id)}
+                    />
+                    <label htmlFor={price.id}>{price.label}</label>
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -222,7 +304,7 @@ export default function ProductGrid() {
           <div className="hidden md:flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Products</h2>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">Showing {categoryProducts.length} products</span>
+              <span className="text-sm text-gray-500">Showing {filteredProducts.length} products</span>
               <select className="border rounded-md px-2 py-1 text-sm">
                 <option>Sort by: Featured</option>
                 <option>Price: Low to High</option>
@@ -232,9 +314,26 @@ export default function ProductGrid() {
             </div>
           </div>
 
+          {/* No Results Message */}
+          {filteredProducts.length === 0 && (
+            <div className="py-20 text-center">
+              <p className="text-lg text-gray-500">No products match your selected filters.</p>
+              <Button
+                variant="outline"
+                className="mt-4"
+                onClick={() => {
+                  setSelectedCategory("all-fits")
+                  setSelectedPrice("all-prices")
+                }}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          )}
+
           {/* Mobile Product Grid (2 columns) */}
           <div className="grid grid-cols-2 gap-3 md:hidden">
-            {categoryProducts.map((product) => (
+            {filteredProducts.map((product) => (
               <Link key={product.id} href={`/product/${product.slug}`} className="block">
                 <div className="border border-gray-300 rounded-md overflow-hidden">
                   <div className="relative aspect-square bg-gray-100">
@@ -271,7 +370,7 @@ export default function ProductGrid() {
 
           {/* Desktop Product Grid (3 columns) */}
           <div className="hidden md:grid grid-cols-3 gap-6">
-            {categoryProducts.map((product) => (
+            {filteredProducts.map((product) => (
               <Link key={product.id} href={`/product/${product.slug}`} className="block group">
                 <div className="border border-gray-300 rounded-md overflow-hidden">
                   <div className="relative aspect-square bg-gray-100">
