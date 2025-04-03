@@ -6,7 +6,16 @@ import Footer from "@/components/footer"
 import { getProductBySlug } from "@/lib/products"
 import { notFound } from "next/navigation"
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
+// Define the correct type for the page props
+interface ProductPageProps {
+  params: {
+    slug: string
+  }
+  searchParams?: Record<string, string | string[] | undefined>
+}
+
+// Use the correct type annotation for the page component
+export default function ProductPage({ params }: ProductPageProps) {
   const product = getProductBySlug(params.slug)
 
   if (!product) {
