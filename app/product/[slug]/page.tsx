@@ -11,13 +11,14 @@ interface ProductPageProps {
   params: {
     slug: string
   }
-  searchParams?: Record<string, string | string[] | undefined>
 }
 
-// Use the correct type annotation for the page component
-export default function ProductPage({ params }: ProductPageProps) {
+// Make the page component async to align with Next.js App Router conventions
+export default async function ProductPage({ params }: ProductPageProps) {
+  // Get the product data
   const product = getProductBySlug(params.slug)
 
+  // If product not found, show the not-found page
   if (!product) {
     notFound()
   }
