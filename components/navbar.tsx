@@ -7,6 +7,24 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import FlyCart from "./fly-cart"
 
+// Category options for consistent linking
+const shopCategories = [
+  { name: "Men", slug: "mens-fits" },
+  { name: "Women", slug: "womens-fits" },
+  { name: "Hoodies", slug: "hoodies" },
+  { name: "Tracksuits", slug: "tracksuits" },
+  { name: "T-Shirts", slug: "t-shirts" },
+  { name: "Shoes", slug: "shoes" },
+  { name: "Accessories", slug: "accessories" },
+]
+
+// Product categories for consistent linking
+const productCategories = [
+  { name: "New Arrivals", slug: "new-arrivals" },
+  { name: "Bestsellers", slug: "bestsellers" },
+  { name: "Sale", slug: "sale" },
+]
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [menuVisible, setMenuVisible] = useState(false)
@@ -83,24 +101,16 @@ export default function Navbar() {
                 Shop <ChevronDown className="ml-1 h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
+                {shopCategories.map((category) => (
+                  <DropdownMenuItem key={category.slug}>
+                    <Link href={`/categories?category=${category.slug}`} className="w-full">
+                      {category.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
                 <DropdownMenuItem>
-                  <Link href="/categories?category=hoodies" className="w-full">
-                    Hoodies
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/categories?category=tracksuits" className="w-full">
-                    Tracksuits
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/categories?category=t-shirts" className="w-full">
-                    T-Shirts
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/categories?category=shoes" className="w-full">
-                    Shoes
+                  <Link href="/categories" className="w-full">
+                    View All
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -111,21 +121,13 @@ export default function Navbar() {
                 Product <ChevronDown className="ml-1 h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Link href="/product/new-arrivals" className="w-full">
-                    New Arrivals
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/product/bestsellers" className="w-full">
-                    Bestsellers
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/product/sale" className="w-full">
-                    Sale
-                  </Link>
-                </DropdownMenuItem>
+                {productCategories.map((category) => (
+                  <DropdownMenuItem key={category.slug}>
+                    <Link href={`/categories?category=${category.slug}`} className="w-full">
+                      {category.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -220,40 +222,20 @@ export default function Navbar() {
                     </button>
                     {expandedSections.shop && (
                       <ul className="pl-4 mt-2 space-y-2">
+                        {shopCategories.map((category) => (
+                          <li key={category.slug}>
+                            <Link
+                              href={`/categories?category=${category.slug}`}
+                              className="block py-1"
+                              onClick={() => setIsMenuOpen(false)}
+                            >
+                              {category.name}
+                            </Link>
+                          </li>
+                        ))}
                         <li>
-                          <Link
-                            href="/categories?category=hoodies"
-                            className="block py-1"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            Hoodies
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="/categories?category=tracksuits"
-                            className="block py-1"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            Tracksuits
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="/categories?category=t-shirts"
-                            className="block py-1"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            T-Shirts
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="/categories?category=shoes"
-                            className="block py-1"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            Shoes
+                          <Link href="/categories" className="block py-1" onClick={() => setIsMenuOpen(false)}>
+                            View All
                           </Link>
                         </li>
                       </ul>
@@ -271,25 +253,17 @@ export default function Navbar() {
                     </button>
                     {expandedSections.product && (
                       <ul className="pl-4 mt-2 space-y-2">
-                        <li>
-                          <Link
-                            href="/product/new-arrivals"
-                            className="block py-1"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            New Arrivals
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/product/bestsellers" className="block py-1" onClick={() => setIsMenuOpen(false)}>
-                            Bestsellers
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/product/sale" className="block py-1" onClick={() => setIsMenuOpen(false)}>
-                            Sale
-                          </Link>
-                        </li>
+                        {productCategories.map((category) => (
+                          <li key={category.slug}>
+                            <Link
+                              href={`/categories?category=${category.slug}`}
+                              className="block py-1"
+                              onClick={() => setIsMenuOpen(false)}
+                            >
+                              {category.name}
+                            </Link>
+                          </li>
+                        ))}
                       </ul>
                     )}
                   </li>

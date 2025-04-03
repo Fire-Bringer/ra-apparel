@@ -22,6 +22,13 @@ const categoryOptions = [
   { id: "sweatsuits", label: "Sweatsuits", slug: "sweatsuits" },
   { id: "zip-ups", label: "Zip-Ups", slug: "zip-ups" },
   { id: "bomber-jackets", label: "Bomber Jackets", slug: "bomber-jackets" },
+  { id: "mens-fits", label: "Men's Fits", slug: "mens-fits" },
+  { id: "womens-fits", label: "Women's Fits", slug: "womens-fits" },
+  { id: "couple-fits", label: "Couple Fits", slug: "couple-fits" },
+  { id: "new-arrivals", label: "New Arrivals", slug: "new-arrivals" },
+  { id: "bestsellers", label: "Bestsellers", slug: "bestsellers" },
+  { id: "sale", label: "Sale", slug: "sale" },
+  { id: "accessories", label: "Accessories", slug: "accessories" },
 ]
 
 // Price options
@@ -33,21 +40,33 @@ const priceOptions = [
   { id: "price-4", label: "$200+" },
 ]
 
+// Add sortOptions array after the priceOptions array
+const sortOptions = [
+  { id: "featured", label: "Featured" },
+  { id: "price-asc", label: "Price: Low to High" },
+  { id: "price-desc", label: "Price: High to Low" },
+  { id: "newest", label: "Newest" },
+]
+
 interface ProductGridProps {
   initialCategory?: string
+  initialSort?: string
 }
 
-export default function ProductGrid({ initialCategory }: ProductGridProps) {
+export default function ProductGrid({ initialCategory, initialSort }: ProductGridProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const [openFilters, setOpenFilters] = useState<Record<string, boolean>>({
     categories: false,
     price: false,
+    sort: false,
   })
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || "all-fits")
   const [selectedPrice, setSelectedPrice] = useState("all-prices")
+  // Add selectedSort state after the other state declarations
+  const [selectedSort, setSelectedSort] = useState(initialSort || "featured")
   const [filteredProducts, setFilteredProducts] = useState(products)
 
   // Update URL when filters change
@@ -66,8 +85,14 @@ export default function ProductGrid({ initialCategory }: ProductGridProps) {
       params.delete("price")
     }
 
+    if (selectedSort && selectedSort !== "featured") {
+      params.set("sort", selectedSort)
+    } else {
+      params.delete("sort")
+    }
+
     router.push(`/categories?${params.toString()}`, { scroll: false })
-  }, [selectedCategory, selectedPrice, router, searchParams])
+  }, [selectedCategory, selectedPrice, selectedSort, router, searchParams])
 
   // Filter products based on selected category and price
   useEffect(() => {
@@ -77,23 +102,47 @@ export default function ProductGrid({ initialCategory }: ProductGridProps) {
     if (selectedCategory && selectedCategory !== "all-fits") {
       filtered = filtered.filter((product) => {
         // Map category slugs to product categories
-        const categoryMap: Record<string, string> = {
-          hoodies: "hoodies",
-          tracksuits: "tracksuits",
-          sweatsuits: "sweatshirts", // Mapping sweatsuits to sweatshirts
-          "t-shirts": "tshirts",
-          "zip-ups": "longsleeves", // Mapping zip-ups to longsleeves
-          "bomber-jackets": "outfits", // Mapping bomber jackets to outfits
-          shoes: "shoes",
-          jerseys: "jerseys",
-          outfits: "outfits",
-          longsleeves: "longsleeves",
+        const categoryMap: Record<string, string[]> = {
+          hoodies: ["hoodies"],
+          tracksuits: ["tracksuits"],
+          sweatsuits: ["sweatshirts"],
+          "t-shirts": ["tshirts"],
+          "zip-ups": ["longsleeves"],
+          "bomber-jackets": ["outfits"],
+          shoes: ["shoes"],
+          jerseys: ["jerseys"],
+          outfits: ["outfits"],
+          longsleeves: ["longsleeves"],
+          "mens-fits": ["outfits", "hoodies", "tshirts", "shoes"],
+          "womens-fits": ["outfits", "hoodies", "tshirts", "shoes"],
+          "couple-fits": ["outfits"],
+          "new-arrivals": [], // Will be handled separately
+          bestsellers: [], // Will be handled separately
+          sale: [], // Will be handled separately
+          accessories: ["shoes", "jerseys"],
         }
 
-        return (
-          product.category === categoryMap[selectedCategory] ||
-          product.category.includes(selectedCategory.replace("-", ""))
-        )
+        // Special cases
+        if (selectedCategory === "new-arrivals") {
+          return product.isNew
+        }
+
+        if (selectedCategory === "sale") {
+          return product.isSale
+        }
+
+        if (selectedCategory === "bestsellers") {
+          // For demo purposes, let's say the first 3 products are bestsellers
+          return ["1", "2", "3"].includes(product.id)
+        }
+
+        // Regular category mapping
+        const mappedCategories = categoryMap[selectedCategory]
+        if (mappedCategories && mappedCategories.length > 0) {
+          return mappedCategories.includes(product.category)
+        }
+
+        return product.category === selectedCategory || product.category.includes(selectedCategory.replace("-", ""))
       })
     }
 
@@ -115,8 +164,40 @@ export default function ProductGrid({ initialCategory }: ProductGridProps) {
       }
     }
 
+    // Apply sorting
+    if (selectedSort) {
+      switch (selectedSort) {
+        case "price-asc":
+          filtered.sort((a, b) => {
+            const priceA = a.salePrice || a.price
+            const priceB = b.salePrice || b.price
+            return priceA - priceB
+          })
+          break
+        case "price-desc":
+          filtered.sort((a, b) => {
+            const priceA = a.salePrice || a.price
+            const priceB = b.salePrice || b.price
+            return priceB - priceA
+          })
+          break
+        case "newest":
+          // For demo purposes, we'll sort by isNew flag and then by id
+          filtered.sort((a, b) => {
+            if (a.isNew && !b.isNew) return -1
+            if (!a.isNew && b.isNew) return 1
+            return Number.parseInt(b.id) - Number.parseInt(a.id) // Assuming newer products have higher IDs
+          })
+          break
+        case "featured":
+        default:
+          // For featured, we'll keep the original order
+          break
+      }
+    }
+
     setFilteredProducts(filtered)
-  }, [selectedCategory, selectedPrice])
+  }, [selectedCategory, selectedPrice, selectedSort])
 
   const toggleFilter = (filter: string) => {
     setOpenFilters((prev) => ({
@@ -235,6 +316,41 @@ export default function ProductGrid({ initialCategory }: ProductGridProps) {
               </div>
             )}
           </div>
+
+          {/* Add a sort section to the mobile filters */}
+          <div className="mb-6">
+            <h3 className="text-gray-500 font-medium mb-3">SORT BY</h3>
+            <div className="mb-2">
+              <button
+                className="flex items-center justify-between w-full p-4 border border-gray-400 rounded-lg"
+                onClick={() => toggleFilter("sort")}
+              >
+                <span className="font-medium text-lg">
+                  {sortOptions.find((option) => option.id === selectedSort)?.label || "Featured"}
+                </span>
+                <ChevronDown className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+
+            {openFilters.sort && (
+              <div className="border border-gray-400 rounded-lg mt-1 overflow-hidden">
+                {sortOptions.map((option) => (
+                  <button
+                    key={option.id}
+                    className={`w-full text-left p-4 ${
+                      selectedSort === option.id ? "bg-gray-100 font-medium" : "text-gray-600"
+                    }`}
+                    onClick={() => {
+                      setSelectedSort(option.id)
+                      toggleFilter("sort")
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -305,11 +421,17 @@ export default function ProductGrid({ initialCategory }: ProductGridProps) {
             <h2 className="text-2xl font-bold">Products</h2>
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-500">Showing {filteredProducts.length} products</span>
-              <select className="border rounded-md px-2 py-1 text-sm">
-                <option>Sort by: Featured</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest</option>
+              {/* Update the sort dropdown in the desktop view */}
+              <select
+                className="border rounded-md px-2 py-1 text-sm"
+                value={selectedSort}
+                onChange={(e) => setSelectedSort(e.target.value)}
+              >
+                {sortOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    Sort by: {option.label}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -409,4 +531,3 @@ export default function ProductGrid({ initialCategory }: ProductGridProps) {
     </div>
   )
 }
-

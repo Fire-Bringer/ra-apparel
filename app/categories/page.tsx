@@ -10,8 +10,9 @@ export default function CategoriesPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  // Extract category from search params
+  // Extract category and sort from search params
   const categoryParam = searchParams.category ? String(searchParams.category) : undefined
+  const sortParam = searchParams.sort ? String(searchParams.sort) : undefined
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -21,7 +22,7 @@ export default function CategoriesPage({
       <main className="flex-grow">
         <ShopBanner />
         <Suspense fallback={<div className="py-20 text-center">Loading products...</div>}>
-          <ProductGrid initialCategory={categoryParam} />
+          <ProductGrid initialCategory={categoryParam} initialSort={sortParam} />
         </Suspense>
       </main>
       <Footer />
