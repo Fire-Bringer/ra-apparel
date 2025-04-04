@@ -169,7 +169,7 @@ export default function AccountPage() {
                 className={`w-full flex items-center py-3 px-4 rounded-md ${
                   activeTab === "address" ? "bg-black text-white" : "hover:bg-gray-200"
                 }`}
-                onClick={() => setActiveTab("address")}
+                onClick={() => router.push("/account/address")}
               >
                 <MapPin className="h-5 w-5 mr-3" />
                 Address
@@ -178,7 +178,7 @@ export default function AccountPage() {
                 className={`w-full flex items-center py-3 px-4 rounded-md ${
                   activeTab === "orders" ? "bg-black text-white" : "hover:bg-gray-200"
                 }`}
-                onClick={() => setActiveTab("orders")}
+                onClick={() => router.push("/account/orders")}
               >
                 <ShoppingBag className="h-5 w-5 mr-3" />
                 Orders
@@ -187,7 +187,7 @@ export default function AccountPage() {
                 className={`w-full flex items-center py-3 px-4 rounded-md ${
                   activeTab === "wishlist" ? "bg-black text-white" : "hover:bg-gray-200"
                 }`}
-                onClick={() => setActiveTab("wishlist")}
+                onClick={() => router.push("/account/wishlist")}
               >
                 <Heart className="h-5 w-5 mr-3" />
                 Wishlist

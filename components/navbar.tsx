@@ -402,7 +402,11 @@ export default function Navbar() {
                     {cartCount}
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
+                <Link
+                  href="/account/wishlist"
+                  className="flex items-center justify-between w-full"
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   <div className="flex items-center">
                     <Heart className="h-5 w-5 mr-2" />
                     <span>Wishlist</span>
@@ -410,7 +414,7 @@ export default function Navbar() {
                   <span className="bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     0
                   </span>
-                </div>
+                </Link>
               </div>
 
               {/* Authentication Options */}

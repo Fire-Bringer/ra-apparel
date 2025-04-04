@@ -3,12 +3,12 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import Image from "next/image"
-import { ChevronLeft, ShoppingBag } from "lucide-react"
+import { ChevronLeft, ShoppingBag, ChevronRight, Eye } from "lucide-react"
 import Navbar from "@/components/navbar"
 import NavbarSpacer from "@/components/navbar-spacer"
 import Footer from "@/components/footer"
 import { useAuth } from "@/contexts/auth-context"
+import { Button } from "@/components/ui/button"
 
 // Define proper interfaces for our data
 interface OrderItem {
@@ -21,41 +21,94 @@ interface OrderItem {
 
 interface Order {
   id: string
+  orderNumber: string
   date: string
-  status: string
+  status: "Delivered" | "Processing" | "Shipped" | "Cancelled"
   total: number
   items: OrderItem[]
 }
 
-// Sample order data - switch between empty array and mock data as needed
+// Sample order data - uncomment to show sample data
 const orders: Order[] = [
-  // Uncomment the following object to show sample data
-  /*
   {
-    id: "ORD-12345",
-    date: "March 15, 2023",
+    id: "1",
+    orderNumber: "#3456_768",
+    date: "October 17, 2023",
     status: "Delivered",
-    total: 129.99,
+    total: 1234.0,
     items: [
       {
-        id: "1",
+        id: "item1",
         name: "Nike Air Presto",
         price: 129.99,
         quantity: 1,
         image: "/products/nike-shoes.webp",
       },
+      {
+        id: "item2",
+        name: "Chelsea FC Away Jersey 2023/24",
+        price: 89.99,
+        quantity: 2,
+        image: "/products/nike-3-tshirt.webp",
+      },
     ],
-  }
-  */
-] // Empty array by default
+  },
+  {
+    id: "2",
+    orderNumber: "#3456_980",
+    date: "October 11, 2023",
+    status: "Delivered",
+    total: 345.0,
+    items: [
+      {
+        id: "item3",
+        name: "Ellesse Tricolor Sweatshirt",
+        price: 74.99,
+        quantity: 1,
+        image: "/products/ellesse-longsleeve.webp",
+      },
+    ],
+  },
+  {
+    id: "3",
+    orderNumber: "#3456_120",
+    date: "August 24, 2023",
+    status: "Delivered",
+    total: 2345.0,
+    items: [
+      {
+        id: "item4",
+        name: "705 California Long Sleeve Tee",
+        price: 49.99,
+        quantity: 1,
+        image: "/products/black-long-sleeve.webp",
+      },
+    ],
+  },
+  {
+    id: "4",
+    orderNumber: "#3456_030",
+    date: "August 12, 2023",
+    status: "Delivered",
+    total: 845.0,
+    items: [
+      {
+        id: "item5",
+        name: "The North Face Urban Explorer Set",
+        price: 249.99,
+        quantity: 1,
+        image: "/products/northface-set.webp",
+      },
+    ],
+  },
+]
+
+// To show an empty state, uncomment this line and comment out the sample data above
+// const orders: Order[] = []
 
 export default function OrdersPage() {
   const router = useRouter()
   const { isAuthenticated } = useAuth()
-
-  // To show sample data, uncomment the next line and comment out the line after it
-  // const orders: Order[] = mockOrders;
-  // const orders: Order[] = [] // Empty array for now
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -63,6 +116,10 @@ export default function OrdersPage() {
       router.push("/sign-in")
     }
   }, [isAuthenticated, router])
+
+  const handleViewOrder = (orderId: string) => {
+    router.push(`/account/orders/${orderId}`)
+  }
 
   if (!isAuthenticated) {
     return null // Will redirect in useEffect
@@ -80,67 +137,110 @@ export default function OrdersPage() {
           back to account
         </Link>
 
-        <h1 className="text-3xl font-bold mb-8">My Orders</h1>
+        <h1 className="text-3xl font-bold mb-8">Orders History</h1>
 
         {orders.length > 0 ? (
-          <div className="space-y-6">
-            {orders.map((order) => (
-              <div key={order.id} className="bg-white p-6 rounded-lg border">
-                <div className="flex flex-col md:flex-row justify-between mb-4">
-                  <div>
-                    <h2 className="font-bold">Order #{order.id}</h2>
-                    <p className="text-gray-500 text-sm">Placed on {order.date}</p>
-                  </div>
-                  <div className="mt-2 md:mt-0">
-                    <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+          <>
+            {/* Desktop Table View (hidden on mobile) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-4 px-4 font-medium text-gray-500">Number ID</th>
+                    <th className="text-left py-4 px-4 font-medium text-gray-500">Dates</th>
+                    <th className="text-left py-4 px-4 font-medium text-gray-500">Status</th>
+                    <th className="text-left py-4 px-4 font-medium text-gray-500">Price</th>
+                    <th className="text-right py-4 px-4 font-medium text-gray-500">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr key={order.id} className="border-b hover:bg-gray-50">
+                      <td className="py-4 px-4">{order.orderNumber}</td>
+                      <td className="py-4 px-4">{order.date}</td>
+                      <td className="py-4 px-4">
+                        <span
+                          className={`inline-block px-2 py-1 rounded-full text-xs ${
+                            order.status === "Delivered"
+                              ? "bg-green-100 text-green-800"
+                              : order.status === "Processing"
+                                ? "bg-blue-100 text-blue-800"
+                                : order.status === "Shipped"
+                                  ? "bg-purple-100 text-purple-800"
+                                  : "bg-red-100 text-red-800"
+                          }`}
+                        >
+                          {order.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4">${order.total.toFixed(2)}</td>
+                      <td className="py-4 px-4 text-right">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-gray-600 hover:text-black"
+                          onClick={() => handleViewOrder(order.id)}
+                        >
+                          <Eye className="h-4 w-4 mr-1" />
+                          View
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View (visible only on mobile) */}
+            <div className="md:hidden space-y-4">
+              {orders.map((order) => (
+                <div key={order.id} className="bg-white p-4 rounded-lg border">
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="font-medium">{order.orderNumber}</h3>
+                    <span
+                      className={`inline-block px-2 py-1 rounded-full text-xs ${
+                        order.status === "Delivered"
+                          ? "bg-green-100 text-green-800"
+                          : order.status === "Processing"
+                            ? "bg-blue-100 text-blue-800"
+                            : order.status === "Shipped"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-red-100 text-red-800"
+                      }`}
+                    >
                       {order.status}
                     </span>
                   </div>
-                </div>
 
-                <div className="border-t border-gray-200 pt-4">
-                  {order.items.map((item) => (
-                    <div key={item.id} className="flex items-center py-4">
-                      <div className="h-20 w-20 bg-gray-100 mr-4 relative flex-shrink-0">
-                        <Image src={item.image || "/placeholder.svg"} alt={item.name} fill className="object-cover" />
-                      </div>
-                      <div className="flex-grow">
-                        <h3 className="font-medium">{item.name}</h3>
-                        <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium">${item.price.toFixed(2)}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                  <div className="space-y-2 text-sm text-gray-600 mb-3">
+                    <p>Date: {order.date}</p>
+                    <p>Total: ${order.total.toFixed(2)}</p>
+                  </div>
 
-                <div className="border-t border-gray-200 pt-4 flex justify-between">
-                  <span className="font-bold">Total</span>
-                  <span className="font-bold">${order.total.toFixed(2)}</span>
-                </div>
-
-                <div className="mt-4">
-                  <Link
-                    href={`/account/orders/${order.id}`}
-                    className="text-sm font-medium underline underline-offset-4"
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full flex items-center justify-center"
+                    onClick={() => handleViewOrder(order.id)}
                   >
-                    View Order Details
-                  </Link>
+                    <Eye className="h-4 w-4 mr-1" />
+                    View Order
+                    <ChevronRight className="h-4 w-4 ml-auto" />
+                  </Button>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         ) : (
           <div className="bg-white p-6 rounded-lg border text-center py-12">
             <ShoppingBag className="h-12 w-12 mx-auto text-gray-300 mb-4" />
             <p className="text-gray-500 mb-4">You havent placed any orders yet.</p>
-            <button
+            <Button
               onClick={() => router.push("/categories")}
               className="bg-black text-white py-2 px-4 rounded-md font-medium hover:bg-black/90 transition-colors"
             >
               Start Shopping
-            </button>
+            </Button>
           </div>
         )}
       </main>

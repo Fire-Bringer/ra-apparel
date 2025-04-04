@@ -1,34 +1,60 @@
 "use client"
 
-import type React from "react"
-
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Plus, Pencil } from "lucide-react"
 import Navbar from "@/components/navbar"
 import NavbarSpacer from "@/components/navbar-spacer"
 import Footer from "@/components/footer"
 import { useAuth } from "@/contexts/auth-context"
-import { useToast } from "@/components/ui/toast"
+import { Button } from "@/components/ui/button"
+
+// Define address interface
+interface Address {
+  id: string
+  type: "billing" | "shipping"
+  name: string
+  phone: string
+  street: string
+  city: string
+  state: string
+  zip: string
+  country: string
+}
 
 export default function AddressPage() {
   const router = useRouter()
-  const { isAuthenticated } = useAuth()
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
-  const [formData, setFormData] = useState({
-    fullName: "",
-    company: "",
-    country: "",
-    streetAddress: "",
-    apartment: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    phone: "",
-  })
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
+  const { isAuthenticated, user } = useAuth()
+
+  // Sample addresses - empty by default
+  const [addresses, setAddresses] = useState<Address[]>([
+    // Uncomment to show sample addresses
+    /*
+    {
+      id: "addr_1",
+      type: "billing",
+      name: "John Doe",
+      phone: "(+1) 234 567 890",
+      street: "345 Long Island",
+      city: "New York",
+      state: "NY",
+      zip: "10001",
+      country: "United States"
+    },
+    {
+      id: "addr_2",
+      type: "shipping",
+      name: "John Doe",
+      phone: "(+1) 234 567 890",
+      street: "345 Long Island",
+      city: "New York",
+      state: "NY",
+      zip: "10001",
+      country: "United States"
+    }
+    */
+  ])
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -37,75 +63,18 @@ export default function AddressPage() {
     }
   }, [isAuthenticated, router])
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
+  // Get billing and shipping addresses
+  const billingAddress = addresses.find((addr) => addr.type === "billing")
+  const shippingAddress = addresses.find((addr) => addr.type === "shipping")
 
-    // Clear error when user types
-    if (formErrors[name]) {
-      setFormErrors({
-        ...formErrors,
-        [name]: "",
-      })
-    }
+  // Handle edit address
+  const handleEditAddress = (type: "billing" | "shipping") => {
+    router.push(`/account/address/edit?type=${type}`)
   }
 
-  const validateForm = () => {
-    const errors: Record<string, string> = {}
-
-    if (!formData.fullName.trim()) {
-      errors.fullName = "Full name is required"
-    }
-
-    if (!formData.country.trim()) {
-      errors.country = "Country is required"
-    }
-
-    if (!formData.streetAddress.trim()) {
-      errors.streetAddress = "Street address is required"
-    }
-
-    if (!formData.city.trim()) {
-      errors.city = "City is required"
-    }
-
-    if (!formData.state.trim()) {
-      errors.state = "State is required"
-    }
-
-    if (!formData.zipCode.trim()) {
-      errors.zipCode = "ZIP code is required"
-    }
-
-    if (!formData.phone.trim()) {
-      errors.phone = "Phone number is required"
-    }
-
-    setFormErrors(errors)
-    return Object.keys(errors).length === 0
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!validateForm()) {
-      return
-    }
-
-    setIsLoading(true)
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false)
-      toast({
-        title: "Success",
-        description: "Your address has been saved.",
-      })
-      router.push("/account")
-    }, 1000)
+  // Handle add address
+  const handleAddAddress = (type: "billing" | "shipping") => {
+    router.push(`/account/address/add?type=${type}`)
   }
 
   if (!isAuthenticated) {
@@ -124,181 +93,84 @@ export default function AddressPage() {
           back to account
         </Link>
 
-        <h1 className="text-3xl font-bold mb-8">Add Address</h1>
+        <h1 className="text-3xl font-bold mb-8">Address</h1>
 
-        <div className="bg-white p-6 rounded-lg border max-w-2xl mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                className={`w-full p-3 border ${
-                  formErrors.fullName ? "border-red-500" : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-1 focus:ring-black`}
-              />
-              {formErrors.fullName && <p className="text-red-500 text-sm mt-1">{formErrors.fullName}</p>}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Billing Address */}
+          <div className="bg-white p-6 rounded-lg border">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-medium">Billing Address</h2>
+              {billingAddress ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-1"
+                  onClick={() => handleEditAddress("billing")}
+                >
+                  <Pencil className="h-4 w-4" />
+                  Edit
+                </Button>
+              ) : null}
             </div>
 
-            <div>
-              <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-                Company (optional)
-              </label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                value={formData.company}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
-                Country <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="country"
-                name="country"
-                value={formData.country}
-                onChange={handleInputChange}
-                className={`w-full p-3 border ${
-                  formErrors.country ? "border-red-500" : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-1 focus:ring-black`}
-              >
-                <option value="">Select a country</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="UK">United Kingdom</option>
-                <option value="AU">Australia</option>
-              </select>
-              {formErrors.country && <p className="text-red-500 text-sm mt-1">{formErrors.country}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700 mb-1">
-                Street Address <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="streetAddress"
-                name="streetAddress"
-                value={formData.streetAddress}
-                onChange={handleInputChange}
-                className={`w-full p-3 border ${
-                  formErrors.streetAddress ? "border-red-500" : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-1 focus:ring-black`}
-              />
-              {formErrors.streetAddress && <p className="text-red-500 text-sm mt-1">{formErrors.streetAddress}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="apartment" className="block text-sm font-medium text-gray-700 mb-1">
-                Apartment, suite, etc. (optional)
-              </label>
-              <input
-                type="text"
-                id="apartment"
-                name="apartment"
-                value={formData.apartment}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-                  City <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className={`w-full p-3 border ${
-                    formErrors.city ? "border-red-500" : "border-gray-300"
-                  } rounded-md focus:outline-none focus:ring-1 focus:ring-black`}
-                />
-                {formErrors.city && <p className="text-red-500 text-sm mt-1">{formErrors.city}</p>}
+            {billingAddress ? (
+              <div className="space-y-1">
+                <p className="font-medium">{billingAddress.name}</p>
+                <p className="text-gray-600">{billingAddress.phone}</p>
+                <p className="text-gray-600">{billingAddress.street}</p>
+                <p className="text-gray-600">
+                  {billingAddress.city}, {billingAddress.state} {billingAddress.zip}
+                </p>
+                <p className="text-gray-600">{billingAddress.country}</p>
               </div>
-
-              <div>
-                <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
-                  State <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="state"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleInputChange}
-                  className={`w-full p-3 border ${
-                    formErrors.state ? "border-red-500" : "border-gray-300"
-                  } rounded-md focus:outline-none focus:ring-1 focus:ring-black`}
-                />
-                {formErrors.state && <p className="text-red-500 text-sm mt-1">{formErrors.state}</p>}
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-500 mb-4">No billing address saved yet.</p>
+                <Button onClick={() => handleAddAddress("billing")} className="bg-black hover:bg-black/90">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Billing Address
+                </Button>
               </div>
+            )}
+          </div>
 
-              <div>
-                <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700 mb-1">
-                  ZIP Code <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="zipCode"
-                  name="zipCode"
-                  value={formData.zipCode}
-                  onChange={handleInputChange}
-                  className={`w-full p-3 border ${
-                    formErrors.zipCode ? "border-red-500" : "border-gray-300"
-                  } rounded-md focus:outline-none focus:ring-1 focus:ring-black`}
-                />
-                {formErrors.zipCode && <p className="text-red-500 text-sm mt-1">{formErrors.zipCode}</p>}
+          {/* Shipping Address */}
+          <div className="bg-white p-6 rounded-lg border">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-medium">Shipping Address</h2>
+              {shippingAddress ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-1"
+                  onClick={() => handleEditAddress("shipping")}
+                >
+                  <Pencil className="h-4 w-4" />
+                  Edit
+                </Button>
+              ) : null}
+            </div>
+
+            {shippingAddress ? (
+              <div className="space-y-1">
+                <p className="font-medium">{shippingAddress.name}</p>
+                <p className="text-gray-600">{shippingAddress.phone}</p>
+                <p className="text-gray-600">{shippingAddress.street}</p>
+                <p className="text-gray-600">
+                  {shippingAddress.city}, {shippingAddress.state} {shippingAddress.zip}
+                </p>
+                <p className="text-gray-600">{shippingAddress.country}</p>
               </div>
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                Phone <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                className={`w-full p-3 border ${
-                  formErrors.phone ? "border-red-500" : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-1 focus:ring-black`}
-              />
-              {formErrors.phone && <p className="text-red-500 text-sm mt-1">{formErrors.phone}</p>}
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <button
-                type="submit"
-                className="bg-black text-white py-3 px-6 rounded-md font-medium hover:bg-black/90 transition-colors"
-                disabled={isLoading}
-              >
-                {isLoading ? "Saving..." : "Save Address"}
-              </button>
-              <button
-                type="button"
-                onClick={() => router.push("/account")}
-                className="border border-gray-300 py-3 px-6 rounded-md font-medium hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-500 mb-4">No shipping address saved yet.</p>
+                <Button onClick={() => handleAddAddress("shipping")} className="bg-black hover:bg-black/90">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Shipping Address
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </main>
 
