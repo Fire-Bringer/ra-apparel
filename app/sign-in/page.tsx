@@ -37,9 +37,13 @@ export default function SignInPage() {
     try {
       await login(formData.usernameOrEmail, formData.password)
       router.push("/")
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      setError("Invalid email or password")
+      // Display the specific error message from the auth context
+      if (error instanceof Error) {
+        setError(error.message)
+      } else {
+        setError("Invalid email or password")
+      }
     } finally {
       setIsLoading(false)
     }

@@ -33,14 +33,25 @@ export default function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+
+    // Client-side validation
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long")
+      return
+    }
+
     setIsLoading(true)
 
     try {
       await signup(formData.name, formData.email, formData.password)
       router.push("/")
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      setError("Failed to create account. Please try again.")
+      // Display the specific error message from the auth context
+      if (error instanceof Error) {
+        setError(error.message)
+      } else {
+        setError("Failed to create account. Please try again.")
+      }
     } finally {
       setIsLoading(false)
     }
@@ -166,6 +177,7 @@ export default function SignUpPage() {
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Password must be at least 6 characters long</p>
               </div>
 
               <button
@@ -184,3 +196,4 @@ export default function SignUpPage() {
     </div>
   )
 }
+

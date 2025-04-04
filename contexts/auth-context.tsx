@@ -53,19 +53,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [isAuthenticated, user, isInitialized])
 
+  // Update the login function to provide more specific error messages
+
   // Mock login function
   const login = async (email: string, password: string) => {
     // In a real app, this would make an API call to authenticate
-    // For now, we'll just simulate a successful login after validating the password
+    // For now, we'll just simulate a successful login after validating the input
 
-    // Simple password validation (in a real app, this would be done server-side)
-    if (!password || password.length < 6) {
-      throw new Error("Invalid password")
+    // Input validation
+    if (!email.trim()) {
+      throw new Error("Email is required")
     }
+
+    // Simple password validation
+    if (!password) {
+      throw new Error("Password is required")
+    }
+
+    if (password.length < 6) {
+      throw new Error("Password must be at least 6 characters")
+    }
+
+    // In a real app, we would verify credentials against a database
+    // For demo purposes, we'll accept any valid format
 
     const mockUser = {
       id: "user_123",
-      name: "John Doe",
+      name: email.split("@")[0], // Use part of the email as the name
       email: email,
     }
 
@@ -73,16 +87,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAuthenticated(true)
   }
 
+  // Update the signup function to provide more specific error messages and improve validation
+
   // Mock signup function
   const signup = async (name: string, email: string, password: string) => {
     // In a real app, this would make an API call to create an account
-    // For now, we'll just simulate a successful signup after validating the password
+    // For now, we'll just simulate a successful signup after validating the input
 
-    // Simple password validation (in a real app, this would be done server-side)
-    if (!password || password.length < 6) {
-      throw new Error("Password must be at least 6 characters")
+    // Input validation
+    if (!name.trim()) {
+      throw new Error("Name is required")
     }
 
+    if (!email.trim() || !email.includes("@")) {
+      throw new Error("Valid email address is required")
+    }
+
+    // Password validation
+    if (!password) {
+      throw new Error("Password is required")
+    }
+
+    if (password.length < 6) {
+      throw new Error("Password must be at least 6 characters long")
+    }
+
+    // Simulate checking if email already exists
+    // In a real app, this would be a server-side check
+    const storedAuth = localStorage.getItem("auth")
+    if (storedAuth) {
+      try {
+        const authData = JSON.parse(storedAuth)
+        if (authData.user && authData.user.email === email) {
+          throw new Error("An account with this email already exists")
+        }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        // Ignore parsing errors
+      }
+    }
+
+    // Create the user
     const mockUser = {
       id: "user_" + Math.random().toString(36).substring(2, 9),
       name: name,
@@ -122,4 +167,3 @@ export function useAuth() {
   }
   return context
 }
-
