@@ -2,11 +2,24 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, Search, ShoppingBag, User, ChevronDown, X, Heart, Instagram, Facebook, Youtube } from "lucide-react"
+import {
+  Menu,
+  Search,
+  ShoppingBag,
+  User,
+  ChevronDown,
+  X,
+  Heart,
+  Instagram,
+  Facebook,
+  Youtube,
+  LogOut,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import FlyCart from "./fly-cart"
 import { useCart } from "@/contexts/cart-context"
+import { useAuth } from "@/contexts/auth-context"
 
 // Category options for consistent linking
 const shopCategories = [
@@ -28,6 +41,7 @@ const productCategories = [
 
 export default function Navbar() {
   const { cartCount } = useCart()
+  const { isAuthenticated, user, logout } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [menuVisible, setMenuVisible] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -76,6 +90,11 @@ export default function Navbar() {
       ...prev,
       [section]: !prev[section],
     }))
+  }
+
+  const handleLogout = () => {
+    logout()
+    setIsMenuOpen(false)
   }
 
   return (
@@ -143,10 +162,38 @@ export default function Navbar() {
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-              <span className="sr-only">Account</span>
-            </Button>
+
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">Account</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>
+                    <Link href="/account" className="w-full">
+                      My Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/orders" className="w-full">
+                      My Orders
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="/sign-in">
+                  <User className="h-5 w-5" />
+                  <span className="sr-only">Sign In</span>
+                </Link>
+              </Button>
+            )}
+
             <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
               <ShoppingBag className="h-5 w-5" />
               {cartCount > 0 && (
@@ -195,6 +242,21 @@ export default function Navbar() {
                   <span className="sr-only">Close</span>
                 </Button>
               </div>
+
+              {/* User Info (if authenticated) */}
+              {isAuthenticated && user && (
+                <div className="p-4 border-b">
+                  <div className="flex items-center">
+                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      <User className="h-6 w-6 text-gray-600" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="font-medium">{user.name}</p>
+                      <p className="text-sm text-gray-500">{user.email}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Search */}
               <div className="p-4 border-b">
@@ -278,6 +340,54 @@ export default function Navbar() {
                       Contact Us
                     </Link>
                   </li>
+                  <li>
+                    <button
+                      className="flex items-center justify-between w-full py-1"
+                      onClick={() => toggleSection("account")}
+                    >
+                      <span>Account</span>
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${expandedSections.account ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    {expandedSections.account && (
+                      <ul className="pl-4 mt-2 space-y-2">
+                        {isAuthenticated ? (
+                          <>
+                            <li>
+                              <Link href="/account" className="block py-1" onClick={() => setIsMenuOpen(false)}>
+                                My Account
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/orders" className="block py-1" onClick={() => setIsMenuOpen(false)}>
+                                My Orders
+                              </Link>
+                            </li>
+                            <li>
+                              <button className="flex items-center text-red-600 py-1" onClick={handleLogout}>
+                                <LogOut className="h-4 w-4 mr-2" />
+                                Logout
+                              </button>
+                            </li>
+                          </>
+                        ) : (
+                          <>
+                            <li>
+                              <Link href="/sign-in" className="block py-1" onClick={() => setIsMenuOpen(false)}>
+                                Sign In
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/sign-up" className="block py-1" onClick={() => setIsMenuOpen(false)}>
+                                Sign Up
+                              </Link>
+                            </li>
+                          </>
+                        )}
+                      </ul>
+                    )}
+                  </li>
                 </ul>
               </nav>
 
@@ -303,9 +413,48 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Sign In Button */}
+              {/* Authentication Options */}
               <div className="p-4 border-b">
-                <Button className="w-full bg-black text-white hover:bg-black/90">Sign In</Button>
+                {isAuthenticated ? (
+                  <div>
+                    <div className="flex flex-col space-y-3">
+                      <Link
+                        href="/account"
+                        className="flex items-center py-2 px-4 bg-gray-100 rounded-md"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <User className="h-5 w-5 mr-2" />
+                        <span>My Account</span>
+                      </Link>
+                      <Button
+                        variant="outline"
+                        className="border-red-600 text-red-600 hover:bg-red-50"
+                        onClick={handleLogout}
+                      >
+                        <LogOut className="h-5 w-5 mr-2" />
+                        Logout
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <Button className="bg-black text-white hover:bg-black/90" asChild>
+                        <Link href="/sign-in" onClick={() => setIsMenuOpen(false)}>
+                          Sign In
+                        </Link>
+                      </Button>
+                      <Button variant="outline" className="border-black hover:bg-gray-100" asChild>
+                        <Link href="/sign-up" onClick={() => setIsMenuOpen(false)}>
+                          Sign Up
+                        </Link>
+                      </Button>
+                    </div>
+                    <div className="mt-4 text-sm text-center text-gray-500">
+                      Access your account or create a new one
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Social Media */}
