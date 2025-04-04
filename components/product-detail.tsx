@@ -6,15 +6,20 @@ import { Minus, Plus, Heart, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Product } from "@/lib/products"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useCart } from "@/contexts/cart-context"
+import { useToast } from "@/components/ui/toast"
 
 interface ProductDetailProps {
   product: Product
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
+  const { addToCart } = useCart()
+  const { toast } = useToast()
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[0])
   const [quantity, setQuantity] = useState(1)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
 
   const handleQuantityChange = (amount: number) => {
     const newQuantity = quantity + amount
@@ -24,13 +29,27 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   }
 
   const handleAddToCart = () => {
-    console.log("Added to cart:", {
-      product,
-      color: selectedColor,
-      size: selectedSize,
+    setIsAddingToCart(true)
+
+    // Add the product to the cart
+    addToCart({
+      productId: product.id,
       quantity,
+      color: selectedColor.name,
+      size: selectedSize,
     })
-    // Here you would typically dispatch to a cart context or make an API call
+
+    // Show a success toast
+    toast({
+      title: "Added to cart",
+      description: `${quantity} × ${product.name} (${selectedColor.name}, Size ${selectedSize})`,
+      duration: 3000,
+    })
+
+    // Reset the loading state
+    setTimeout(() => {
+      setIsAddingToCart(false)
+    }, 500)
   }
 
   // Get the primary product image or the first image if no primary is specified
@@ -169,8 +188,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           </div>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <Button className="bg-black hover:bg-black/90 text-white py-6 flex-1" onClick={handleAddToCart}>
-              Add to Cart
+            <Button
+              className="bg-black hover:bg-black/90 text-white py-6 flex-1"
+              onClick={handleAddToCart}
+              disabled={isAddingToCart}
+            >
+              {isAddingToCart ? "Adding..." : "Add to Cart"}
             </Button>
             <Button variant="outline" size="icon" className="h-12 w-12">
               <Heart className="h-5 w-5" />
@@ -213,4 +236,3 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     </div>
   )
 }
-

@@ -5,33 +5,8 @@ import Link from "next/link"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import CartItem from "./cart-item"
+import { useCart } from "@/contexts/cart-context"
 import { products } from "@/lib/products"
-
-// Create a cart item type that includes quantity
-interface CartItemType {
-  productId: string
-  quantity: number
-  color: string
-}
-
-// Select a few products for the initial cart
-const initialCartItems: CartItemType[] = [
-  {
-    productId: "1", // Nike Air Presto
-    quantity: 1,
-    color: "Black/Yellow",
-  },
-  {
-    productId: "3", // Ellesse Tricolor Sweatshirt
-    quantity: 2,
-    color: "Navy/White/Red",
-  },
-  {
-    productId: "7", // Minimalist White Hoodie Set
-    quantity: 1,
-    color: "White/Light Blue",
-  },
-]
 
 interface FlyCartProps {
   isOpen: boolean
@@ -39,7 +14,7 @@ interface FlyCartProps {
 }
 
 export default function FlyCart({ isOpen, onClose }: FlyCartProps) {
-  const [cartItems, setCartItems] = useState(initialCartItems)
+  const { cartItems, removeFromCart, updateQuantity, subtotal, total } = useCart()
   const [isVisible, setIsVisible] = useState(false)
 
   // Handle animation states
@@ -63,26 +38,9 @@ export default function FlyCart({ isOpen, onClose }: FlyCartProps) {
     }
   }, [isOpen])
 
-  const removeItem = (productId: string) => {
-    setCartItems(cartItems.filter((item) => item.productId !== productId))
-  }
-
-  const updateQuantity = (productId: string, quantity: number) => {
-    setCartItems(cartItems.map((item) => (item.productId === productId ? { ...item, quantity } : item)))
-  }
-
-  // Calculate subtotal based on actual product prices
-  const subtotal = cartItems.reduce((total, item) => {
-    const product = products.find((p) => p.id === item.productId)
-    if (!product) return total
-    const price = product.salePrice || product.price
-    return total + price * item.quantity
-  }, 0)
-
-  // Adding shipping and tax for total (15% of subtotal for tax and shipping)
-  const shipping = 10.0
+  // Calculate shipping and tax
+  const shipping = cartItems.length > 0 ? 10.0 : 0
   const tax = subtotal * 0.07
-  const total = subtotal + shipping + tax
 
   if (!isVisible) return null
 
@@ -114,9 +72,10 @@ export default function FlyCart({ isOpen, onClose }: FlyCartProps) {
                     name={product.name}
                     price={product.salePrice || product.price}
                     color={item.color}
+                    size={item.size}
                     image={product.images[0].src}
                     quantity={item.quantity}
-                    onRemove={removeItem}
+                    onRemove={removeFromCart}
                     onUpdateQuantity={updateQuantity}
                   />
                 )

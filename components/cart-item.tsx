@@ -9,6 +9,7 @@ interface CartItemProps {
   name: string
   price: number
   color: string
+  size?: string
   image?: string
   quantity: number
   onRemove: (id: string) => void
@@ -20,6 +21,7 @@ export default function CartItem({
   name,
   price,
   color,
+  size,
   image,
   quantity,
   onRemove,
@@ -46,7 +48,10 @@ export default function CartItem({
           <div className="flex justify-between">
             <div>
               <h3 className="text-base font-medium">{name}</h3>
-              <p className="mt-1 text-sm text-gray-500">Color: {color}</p>
+              <p className="mt-1 text-sm text-gray-500">
+                {color}
+                {size ? `, Size ${size}` : ""}
+              </p>
             </div>
             <p className="text-base font-medium">${price.toFixed(2)}</p>
           </div>
