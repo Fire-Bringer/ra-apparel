@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import {
   Menu,
   Search,
@@ -108,8 +109,10 @@ export default function Navbar() {
       >
         {/* Desktop Navbar */}
         <div className="container mx-auto px-4 md:px-6 lg:px-8 hidden md:flex items-center justify-between h-16">
-          <Link href="/" className="font-bold text-xl">
-            RAA LOGO
+          <Link href="/" className="flex items-center">
+            <div className="h-10 w-10 relative overflow-hidden rounded-full">
+              <Image src="/raa-logo.png" alt="RAA Logo" fill className="object-contain" priority />
+            </div>
           </Link>
 
           <nav className="flex items-center space-x-8">
@@ -158,9 +161,11 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon">
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/search">
+                <Search className="h-5 w-5" />
+                <span className="sr-only">Search</span>
+              </Link>
             </Button>
 
             {isAuthenticated ? (
@@ -178,7 +183,7 @@ export default function Navbar() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link href="/orders" className="w-full">
+                    <Link href="/account/orders" className="w-full">
                       My Orders
                     </Link>
                   </DropdownMenuItem>
@@ -213,8 +218,10 @@ export default function Navbar() {
             <span className="sr-only">Menu</span>
           </Button>
 
-          <Link href="/" className="font-bold">
-            RAA
+          <Link href="/" className="flex items-center">
+            <div className="h-8 w-8 relative overflow-hidden rounded-full">
+              <Image src="/raa-logo.png" alt="RAA Logo" fill className="object-contain" priority />
+            </div>
           </Link>
 
           <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
@@ -260,14 +267,17 @@ export default function Navbar() {
 
               {/* Search */}
               <div className="p-4 border-b">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black"
-                  />
-                </div>
+                <form action="/search" method="GET">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input
+                      type="text"
+                      name="q"
+                      placeholder="Search"
+                      className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black"
+                    />
+                  </div>
+                </form>
               </div>
 
               {/* Navigation */}
@@ -360,7 +370,7 @@ export default function Navbar() {
                               </Link>
                             </li>
                             <li>
-                              <Link href="/orders" className="block py-1" onClick={() => setIsMenuOpen(false)}>
+                              <Link href="/account/orders" className="block py-1" onClick={() => setIsMenuOpen(false)}>
                                 My Orders
                               </Link>
                             </li>
@@ -394,10 +404,10 @@ export default function Navbar() {
               {/* Cart & Wishlist */}
               <div className="p-4 border-b space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center">
+                  <Link href="/cart" className="flex items-center" onClick={() => setIsMenuOpen(false)}>
                     <ShoppingBag className="h-5 w-5 mr-2" />
                     <span>Cart</span>
-                  </div>
+                  </Link>
                   <span className="bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {cartCount}
                   </span>
@@ -486,4 +496,3 @@ export default function Navbar() {
     </>
   )
 }
-

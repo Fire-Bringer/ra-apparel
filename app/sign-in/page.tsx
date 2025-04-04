@@ -66,7 +66,7 @@ export default function SignInPage() {
             priority
           />
           <div className="absolute top-8 left-8 text-white font-bold">
-            <span>GET MONEY NETWORK LOGO</span>
+            <span>RAA LOGO</span>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export default function SignInPage() {
               priority
             />
             <div className="absolute top-4 right-4 text-white font-bold">
-              <span>GMN</span>
+              <span>RAA</span>
             </div>
           </div>
         </div>

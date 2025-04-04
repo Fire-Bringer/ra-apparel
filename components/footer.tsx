@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { ChevronUp } from "lucide-react"
 import { Instagram, Facebook, Youtube } from "lucide-react"
+import Image from "next/image"
 
 export default function Footer() {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -29,15 +30,15 @@ export default function Footer() {
           <p className="text-sm mb-4">More than just a hustle. Its a lifestyle.</p>
 
           <div className="flex space-x-4 mb-6">
-            <Link href="https://instagram.com" className="hover:opacity-80">
+            <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
               <Instagram size={20} />
               <span className="sr-only">Instagram</span>
             </Link>
-            <Link href="https://facebook.com" className="hover:opacity-80">
+            <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
               <Facebook size={20} />
               <span className="sr-only">Facebook</span>
             </Link>
-            <Link href="https://youtube.com" className="hover:opacity-80">
+            <Link href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
               <Youtube size={20} />
               <span className="sr-only">Youtube</span>
             </Link>
@@ -58,10 +59,10 @@ export default function Footer() {
               <Link href="/" className="text-sm hover:underline">
                 Home
               </Link>
-              <Link href="/shop" className="text-sm hover:underline">
+              <Link href="/categories" className="text-sm hover:underline">
                 Shop
               </Link>
-              <Link href="/product" className="text-sm hover:underline">
+              <Link href="/categories" className="text-sm hover:underline">
                 Product
               </Link>
               <Link href="/articles" className="text-sm hover:underline">
@@ -103,32 +104,32 @@ export default function Footer() {
         <div className="py-4">
           <h3 className="font-medium mb-3">Office</h3>
           <div className="space-y-2 text-sm">
-            <p>J Street,</p>
-            <p>District 1, HCMC</p>
-            <p>Sacramento</p>
-            <p className="mt-4">84-756-3237</p>
+            <p>1234 Capitol Avenue,</p>
+            <p>Downtown District</p>
+            <p>Sacramento, CA 95814</p>
+            <p className="mt-4">916-555-7890</p>
           </div>
         </div>
 
         {/* Payment Methods */}
         <div className="flex flex-wrap gap-2 my-6 justify-center">
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/visa.webp" alt="Visa" className="h-5" />
+            <Image src="/visa.webp" alt="Visa" width={30} height={20} />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/amx.webp" alt="American Express" className="h-5" />
+            <Image src="/amx.webp" alt="American Express" width={30} height={20} />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/master.webp" alt="Mastercard" className="h-5" />
+            <Image src="/master.webp" alt="Mastercard" width={30} height={20} />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/stripe.webp" alt="Stripe" className="h-5" />
+            <Image src="/stripe.webp" alt="Stripe" width={30} height={20} />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/paypal.webp" alt="PayPal" className="h-5" />
+            <Image src="/paypal.webp" alt="PayPal" width={30} height={20} />
           </div>
           <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-            <img src="/apple.webp" alt="Apple Pay" className="h-5" />
+            <Image src="/apple.webp" alt="Apple Pay" width={30} height={20} />
           </div>
         </div>
 
@@ -144,7 +145,13 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-center text-xs mt-4">
-          <p>Copyright © {currentYear} RAA All rights reserved</p>
+          <p>
+            Copyright © {currentYear}{" "}
+            <Link href="https://rashaddupaty.com" target="_blank" rel="noopener noreferrer" className="hover:underline">
+              Rashad DuPaty
+            </Link>{" "}
+            All rights reserved
+          </p>
         </div>
       </div>
 
@@ -162,15 +169,25 @@ export default function Footer() {
               </p>
 
               <div className="flex space-x-4">
-                <Link href="https://instagram.com" className="hover:opacity-80">
+                <Link
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80"
+                >
                   <Instagram size={20} />
                   <span className="sr-only">Instagram</span>
                 </Link>
-                <Link href="https://facebook.com" className="hover:opacity-80">
+                <Link
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80"
+                >
                   <Facebook size={20} />
                   <span className="sr-only">Facebook</span>
                 </Link>
-                <Link href="https://youtube.com" className="hover:opacity-80">
+                <Link href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
                   <Youtube size={20} />
                   <span className="sr-only">Youtube</span>
                 </Link>
@@ -184,10 +201,10 @@ export default function Footer() {
                 <Link href="/" className="text-sm hover:underline">
                   Home
                 </Link>
-                <Link href="/shop" className="text-sm hover:underline">
+                <Link href="/categories" className="text-sm hover:underline">
                   Shop
                 </Link>
-                <Link href="/product" className="text-sm hover:underline">
+                <Link href="/categories" className="text-sm hover:underline">
                   Product
                 </Link>
                 <Link href="/articles" className="text-sm hover:underline">
@@ -222,10 +239,10 @@ export default function Footer() {
             <div className="col-span-1">
               <h3 className="font-medium mb-4">Office</h3>
               <div className="space-y-1 text-sm">
-                <p>431H Hai Trieu street,</p>
-                <p>District 1, HCMC</p>
-                <p>Vietnam</p>
-                <p className="mt-4">84-756-3237</p>
+                <p>1234 Capitol Avenue,</p>
+                <p>Downtown District</p>
+                <p>Sacramento, CA 95814</p>
+                <p className="mt-4">916-555-7890</p>
               </div>
             </div>
           </div>
@@ -233,7 +250,18 @@ export default function Footer() {
           <div className="flex flex-wrap justify-between items-center pt-6 border-t border-gray-800">
             {/* Copyright */}
             <div className="text-sm">
-              <p>Copyright © {currentYear} RAA All rights reserved</p>
+              <p>
+                Copyright © {currentYear}{" "}
+                <Link
+                  href="https://rashaddupaty.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Rashad DuPaty
+                </Link>{" "}
+                All rights reserved
+              </p>
             </div>
 
             {/* Legal Links */}
@@ -242,29 +270,29 @@ export default function Footer() {
                 Privacy Policy
               </Link>
               <Link href="/terms" className="hover:underline">
-                Terms & Conditions
+                Terms of Use
               </Link>
             </div>
 
             {/* Payment Methods */}
             <div className="flex flex-wrap gap-2">
               <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-                <img src="/visa.webp" alt="Visa" className="h-5" />
+                <Image src="/visa.webp" alt="Visa" width={30} height={20} />
               </div>
               <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-                <img src="/amx.webp" alt="American Express" className="h-5" />
+                <Image src="/amx.webp" alt="American Express" width={30} height={20} />
               </div>
               <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-                <img src="/master.webp" alt="Mastercard" className="h-5" />
+                <Image src="/master.webp" alt="Mastercard" width={30} height={20} />
               </div>
               <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-                <img src="/stripe.webp" alt="Stripe" className="h-5" />
+                <Image src="/stripe.webp" alt="Stripe" width={30} height={20} />
               </div>
               <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-                <img src="/paypal.webp" alt="PayPal" className="h-5" />
+                <Image src="/paypal.webp" alt="PayPal" width={30} height={20} />
               </div>
               <div className="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
-                <img src="/apple.webp" alt="Apple Pay" className="h-5" />
+                <Image src="/apple.webp" alt="Apple Pay" width={30} height={20} />
               </div>
             </div>
           </div>
