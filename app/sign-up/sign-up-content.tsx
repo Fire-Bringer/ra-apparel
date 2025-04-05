@@ -50,7 +50,7 @@ export default function SignUpContent() {
         lastName: formData.lastName,
       })
       router.push(redirectTo)
-    } catch (err) {
+    } catch {
       setError("Failed to create account")
       setIsLoading(false)
     }

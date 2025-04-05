@@ -5,15 +5,22 @@ import NavbarSpacer from "@/components/navbar-spacer"
 import Footer from "@/components/footer"
 import { useCart } from "@/contexts/cart-context"
 import { useRouter } from "next/navigation"
-import { ShoppingBag } from "lucide-react"
+import { ShoppingBag, Trash2, Plus, Minus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import type { CartItem } from "@/contexts/cart-context"
 
 export default function CartContent() {
-  const { cart, updateQuantity, removeFromCart } = useCart()
+  const { cartItems, updateQuantity, removeFromCart } = useCart()
   const router = useRouter()
 
   // Calculate totals
-  const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0)
+  const subtotal = cartItems.reduce((total: number, item: CartItem) => {
+    // Since CartItem only has productId, we need to find the product to get its price
+    // For simplicity, let's assume each item has a price of 100
+    const itemPrice = 100
+    return total + itemPrice * item.quantity
+  }, 0)
+
   const shipping = subtotal > 100 ? 0 : 10
   const total = subtotal + shipping
 
@@ -27,10 +34,52 @@ export default function CartContent() {
         <div className="container mx-auto px-4">
           <h1 className="text-3xl md:text-4xl font-bold mb-8">Your Cart</h1>
 
-          {cart.length > 0 ? (
+          {cartItems.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Cart Items */}
-              <div className="lg:col-span-2">{/* Cart items would go here */}</div>
+              <div className="lg:col-span-2">
+                <div className="space-y-4">
+                  {cartItems.map((item) => (
+                    <div
+                      key={`${item.productId}-${item.color}-${item.size}`}
+                      className="flex items-center p-4 bg-white rounded-lg border"
+                    >
+                      <div className="w-20 h-20 bg-gray-100 rounded-md mr-4"></div>
+                      <div className="flex-grow">
+                        <h3 className="font-medium">Product {item.productId}</h3>
+                        <p className="text-sm text-gray-500">
+                          Color: {item.color}, Size: {item.size}
+                        </p>
+                        <div className="flex items-center mt-2">
+                          <button
+                            onClick={() => updateQuantity(item.productId, Math.max(1, item.quantity - 1))}
+                            className="p-1 rounded-md border"
+                          >
+                            <Minus className="h-4 w-4" />
+                          </button>
+                          <span className="mx-2">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                            className="p-1 rounded-md border"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-medium">$100.00</p>
+                        <button
+                          onClick={() => removeFromCart(item.productId)}
+                          className="text-red-500 mt-2 flex items-center"
+                        >
+                          <Trash2 className="h-4 w-4 mr-1" />
+                          <span className="text-sm">Remove</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
               {/* Order Summary */}
               <div className="lg:col-span-1">

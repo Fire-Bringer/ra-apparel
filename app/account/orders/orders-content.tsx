@@ -153,7 +153,7 @@ export default function OrdersContent() {
         ) : (
           <div className="bg-white p-6 rounded-lg border text-center py-12">
             <ShoppingBag className="h-12 w-12 mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500 mb-4">You haven't placed any orders yet.</p>
+            <p className="text-gray-500 mb-4">You haven&apos;t placed any orders yet.</p>
             <Button
               onClick={() => router.push("/categories")}
               className="bg-black text-white py-2 px-4 rounded-md font-medium hover:bg-black/90 transition-colors"

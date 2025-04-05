@@ -6,30 +6,28 @@ import NavbarSpacer from "@/components/navbar-spacer"
 import Footer from "@/components/footer"
 import Link from "next/link"
 import { ChevronRight, Search } from "lucide-react"
-import { useSearchParams } from "@/components/search-params-provider"
 
 export default function FAQsContent() {
-  const searchParams = useSearchParams()
-  const initialCategory = searchParams.get("category") || "general"
-
-  const [activeCategory, setActiveCategory] = useState(initialCategory)
   const [searchQuery, setSearchQuery] = useState("")
-  const [expandedFaqs, setExpandedFaqs] = useState<Record<string, boolean>>({})
 
   // Categories and FAQs data would go here
+  // Categories will be used when implementing the category filter functionality
+  /*
   const categories = [
     { id: "general", name: "General" },
     { id: "orders", name: "Orders & Shipping" },
     // More categories...
   ]
+  */
 
   // Toggle FAQ expansion
-  const toggleFaq = (id: string) => {
-    setExpandedFaqs((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }))
-  }
+  // This function will be used when implementing the FAQ accordion functionality
+  // const toggleFaq = (id: string) => {
+  //   setExpandedFaqs((prev) => ({
+  //     ...prev,
+  //     [id]: !prev[id],
+  //   }))
+  // }
 
   return (
     <div className="flex flex-col min-h-screen">

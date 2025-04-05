@@ -1,8 +1,6 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Navbar from "@/components/navbar"
 import NavbarSpacer from "@/components/navbar-spacer"
@@ -13,16 +11,14 @@ import { Button } from "@/components/ui/button"
 
 export default function CheckoutContent() {
   const router = useRouter()
-  const { cart, clearCart } = useCart()
+  const {} = useCart()
   const searchParams = useSearchParams()
 
   // Get any URL parameters
   const step = searchParams.get("step") || "information"
 
-  // State for checkout form
-  const [formData, setFormData] = useState({
-    // Form fields would go here
-  })
+  // State will be added when form implementation is needed
+  // const [formData, setFormData] = useState({})
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {

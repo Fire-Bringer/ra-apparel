@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import NavbarSpacer from "@/components/navbar-spacer"
@@ -11,7 +10,6 @@ import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 
 export default function ForgotPasswordContent() {
-  const router = useRouter()
   const [email, setEmail] = useState("")
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)

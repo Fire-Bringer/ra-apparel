@@ -31,7 +31,7 @@ export default function SignInContent() {
     try {
       await signIn(email, password)
       router.push(redirectTo)
-    } catch (err) {
+    } catch {
       setError("Invalid email or password")
       setIsLoading(false)
     }
@@ -121,4 +121,3 @@ export default function SignInContent() {
     </div>
   )
 }
-

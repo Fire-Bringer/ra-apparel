@@ -25,10 +25,10 @@ interface Address {
 
 export default function AddressContent() {
   const router = useRouter()
-  const { isAuthenticated, user } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   // Sample addresses - empty by default
-  const [addresses, setAddresses] = useState<Address[]>([])
+  const [addresses] = useState<Address[]>([])
 
   // Redirect if not authenticated
   useEffect(() => {
