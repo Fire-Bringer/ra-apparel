@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { Mail } from "lucide-react"
+import Image from "next/image"
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("")
@@ -22,7 +23,13 @@ export default function NewsletterSection() {
 
   return (
     <section className="py-16 bg-[#121212] text-white relative overflow-hidden">
-      <div className="container px-4 mx-auto max-w-3xl text-center relative z-10">
+      {/* Add the background image */}
+      <div className="absolute inset-0 z-0">
+        <Image src="/newsletter-bg.webp" alt="Easy Money background" fill className="object-cover opacity-80" />
+        <div className="absolute inset-0 bg-black/50 z-10"></div>
+      </div>
+
+      <div className="container px-4 mx-auto max-w-3xl text-center relative z-20">
         <h2 className="text-4xl md:text-5xl font-bold mb-4">Join Our Newsletter</h2>
         <p className="text-xl mb-10 text-white/90">Sign up for deals, new products and promotions</p>
 

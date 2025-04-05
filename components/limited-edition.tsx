@@ -8,8 +8,15 @@ export default function LimitedEdition() {
   saleEndDate.setDate(saleEndDate.getDate() + 4)
 
   return (
-    <section className="bg-black py-12 md:py-16">
-      <div className="container px-4 mx-auto">
+    <section className="relative py-12 md:py-16 overflow-hidden">
+      {/* Add background image */}
+      <div className="absolute inset-0 z-0">
+        <Image src="/limited-background.webp" alt="Dark textured background" fill className="object-cover" />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+      </div>
+
+      {/* Update the container div to have a relative z-index to appear above the background */}
+      <div className="container px-4 mx-auto relative z-10">
         <div className="flex flex-col md:flex-row items-center md:justify-center md:gap-0 lg:gap-2">
           {/* Text Content */}
           <div className="w-full md:w-5/12 text-center md:text-left mb-8 md:mb-0">
