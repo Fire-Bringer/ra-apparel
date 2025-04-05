@@ -4,6 +4,9 @@ import { Inter } from "next/font/google"
 import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
 import { ToastProvider } from "@/components/ui/toast"
+import { NavigationLoader } from "@/components/navigation-loader"
+import { NavigationEvents } from "@/components/navigation-events"
+import { ProgressBar } from "@/components/progress-bar"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -19,7 +22,15 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <AuthProvider>
             <CartProvider>
-              <ToastProvider>{children}</ToastProvider>
+              <ToastProvider>
+                {/* Progress bar for navigation feedback */}
+                <ProgressBar />
+                {/* Navigation loader will show loading UI during navigation */}
+                <NavigationLoader />
+                {/* Navigation events to track route changes */}
+                <NavigationEvents />
+                {children}
+              </ToastProvider>
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>
