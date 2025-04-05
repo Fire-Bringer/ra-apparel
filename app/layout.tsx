@@ -1,7 +1,23 @@
 import type React from "react"
-import { Suspense } from "react"
-import { SearchParamsProvider } from "@/components/with-search-params"
 import "./globals.css"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { ThemeProvider } from "@/components/theme-provider"
+import { CartProvider } from "@/contexts/cart-context"
+import { AuthProvider } from "@/contexts/auth-context"
+import { Suspense } from "react"
+import { SearchParamsProvider } from "@/components/client-search-params"
+import { NavigationEvents } from "@/components/navigation-events"
+import { ProgressBar } from "@/components/progress-bar"
+import { ToastProvider } from "@/components/ui/toast"
+import { NavigationLoader } from "@/components/navigation-loader"
+
+const inter = Inter({ subsets: ["latin"] })
+
+export const metadata: Metadata = {
+  title: "R.A. Apparel - Premium Streetwear",
+  description: "Shop the latest streetwear trends at R.A. Apparel. Premium quality hoodies, t-shirts, and more.",
+}
 
 export default function RootLayout({
   children,
@@ -9,11 +25,27 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
-        <Suspense fallback={<div>Loading...</div>}>
-          <SearchParamsProvider>{children}</SearchParamsProvider>
-        </Suspense>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          <AuthProvider>
+            <CartProvider>
+              <ToastProvider>
+                {/* Progress bar for navigation feedback */}
+                <ProgressBar />
+                {/* Navigation loader will show loading UI during navigation */}
+                <NavigationLoader />
+                <SearchParamsProvider>
+                  <Suspense fallback={null}>
+                    {children}
+                    {/* Navigation events to track route changes */}
+                    <NavigationEvents />
+                  </Suspense>
+                </SearchParamsProvider>
+              </ToastProvider>
+            </CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
