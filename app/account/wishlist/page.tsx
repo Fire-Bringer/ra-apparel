@@ -29,28 +29,28 @@ const sampleWishlistItems: WishlistItem[] = [
     name: "Nike Air Presto",
     price: 129.99,
     color: "Black",
-    image: "/products/nike-shoes.webp",
+    image: "/nike-shoes.webp",
   },
   {
     id: "2",
     name: "Chelsea FC Away Jersey 2023/24",
     price: 89.99,
     color: "Beige",
-    image: "/products/nike-3-tshirt.webp",
+    image: "/nike-3-tshirt.webp",
   },
   {
     id: "3",
     name: "Ellesse Tricolor Sweatshirt",
     price: 74.99,
     color: "Navy/White/Red",
-    image: "/products/ellesse-longsleeve.webp",
+    image: "/ellesse-longsleeve.webp",
   },
   {
     id: "4",
     name: "705 California Long Sleeve Tee",
     price: 49.99,
     color: "Black",
-    image: "/products/black-long-sleeve.webp",
+    image: "/black-long-sleeve.webp",
   },
 ]
 
@@ -238,4 +238,3 @@ export default function WishlistPage() {
     </div>
   )
 }
-
