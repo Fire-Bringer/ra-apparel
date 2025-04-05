@@ -13,8 +13,9 @@ import NavbarSpacer from "@/components/navbar-spacer"
 import Footer from "@/components/footer"
 import { useCart } from "@/contexts/cart-context"
 import { products } from "@/lib/products"
+import { withSearchParams } from "@/components/with-search-params"
 
-export default function CheckoutContent() {
+function CheckoutContent() {
   const router = useRouter()
   const { cartItems, subtotal } = useCart()
   const [selectedShipping, setSelectedShipping] = useState("free")
@@ -481,4 +482,6 @@ export default function CheckoutContent() {
     </div>
   )
 }
+
+export default withSearchParams(CheckoutContent)
 
