@@ -1,14 +1,13 @@
 import { Suspense } from "react"
 import { ClientOnly } from "@/components/with-client-only"
-import HomeContent from "./home-content"
+import PageContent from "./page-content"
 
-export default function Home() {
+export default function Page() {
   return (
-    <Suspense fallback={<div>Loading home page...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <ClientOnly>
-        <HomeContent />
+        <PageContent />
       </ClientOnly>
     </Suspense>
   )
 }
-

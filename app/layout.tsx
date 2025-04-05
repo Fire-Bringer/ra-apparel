@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
 import { Suspense } from "react"
-import { SearchParamsProvider } from "@/components/client-search-params"
 import { NavigationEvents } from "@/components/navigation-events"
 import { ProgressBar } from "@/components/progress-bar"
 import { ToastProvider } from "@/components/ui/toast"
@@ -35,13 +34,11 @@ export default function RootLayout({
                 <ProgressBar />
                 {/* Navigation loader will show loading UI during navigation */}
                 <NavigationLoader />
-                <SearchParamsProvider>
-                  <Suspense fallback={null}>
-                    {children}
-                    {/* Navigation events to track route changes */}
-                    <NavigationEvents />
-                  </Suspense>
-                </SearchParamsProvider>
+                <Suspense fallback={null}>
+                  {children}
+                  {/* Navigation events to track route changes */}
+                  <NavigationEvents />
+                </Suspense>
               </ToastProvider>
             </CartProvider>
           </AuthProvider>

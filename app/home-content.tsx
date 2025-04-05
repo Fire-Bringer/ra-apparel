@@ -3,16 +3,21 @@
 import Navbar from "@/components/navbar"
 import NavbarSpacer from "@/components/navbar-spacer"
 import Hero from "@/components/hero"
-import FeaturedCollection from "@/components/featured-collection"
-import LatestArticles from "@/components/latest-articles"
-import Footer from "@/components/footer"
-import SmsPlug from "@/components/sms-plug"
 import FeaturedCarousel from "@/components/featured-carousel"
-import LatestProducts from "@/components/latest-products"
+import CategoriesSection from "@/components/categories-section"
 import LimitedEdition from "@/components/limited-edition"
-import { withSearchParams } from "@/components/with-search-params"
+import CollectionsSection from "@/components/collections-section"
+import LatestProducts from "@/components/latest-products"
+import NewsletterSection from "@/components/newsletter-section"
+import SmsPlug from "@/components/sms-plug"
+import Footer from "@/components/footer"
+// Import only if needed
+// import { useSearchParams } from "@/components/search-params-provider"
 
-function HomeContent() {
+export default function HomeContent() {
+  // Only use this if you actually need search params
+  // const searchParams = useSearchParams()
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -20,11 +25,12 @@ function HomeContent() {
       <NavbarSpacer />
       <main className="flex-grow">
         <Hero />
-        <FeaturedCollection />
         <FeaturedCarousel />
-        <LatestProducts />
+        <CategoriesSection />
         <LimitedEdition />
-        <LatestArticles />
+        <CollectionsSection />
+        <LatestProducts />
+        <NewsletterSection />
         <SmsPlug />
       </main>
       <Footer />
@@ -32,4 +38,3 @@ function HomeContent() {
   )
 }
 
-export default withSearchParams(HomeContent)
