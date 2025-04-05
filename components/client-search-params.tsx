@@ -1,10 +1,10 @@
 "use client"
 
-import { useSearchParams as useNextSearchParams } from "next/navigation"
+import { useSearchParams as useNextSearchParams, type ReadonlyURLSearchParams } from "next/navigation"
 import { createContext, useContext, type ReactNode } from "react"
 
 // Create a context to hold the search params
-const SearchParamsContext = createContext<URLSearchParams | null>(null)
+const SearchParamsContext = createContext<ReadonlyURLSearchParams | null>(null)
 
 // Provider component that will wrap the application
 export function SearchParamsProvider({ children }: { children: ReactNode }) {
