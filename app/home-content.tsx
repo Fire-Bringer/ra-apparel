@@ -11,13 +11,8 @@ import LatestProducts from "@/components/latest-products"
 import NewsletterSection from "@/components/newsletter-section"
 import SmsPlug from "@/components/sms-plug"
 import Footer from "@/components/footer"
-// Import only if needed
-// import { useSearchParams } from "@/components/search-params-provider"
 
 export default function HomeContent() {
-  // Only use this if you actually need search params
-  // const searchParams = useSearchParams()
-
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

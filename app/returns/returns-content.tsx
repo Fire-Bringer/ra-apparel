@@ -6,7 +6,7 @@ import Footer from "@/components/footer"
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 
-export default function TermsContent() {
+export default function ReturnsContent() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -21,28 +21,15 @@ export default function TermsContent() {
               Home
             </Link>
             <ChevronRight className="h-4 w-4 mx-2 text-gray-400" />
-            <span className="font-medium">Terms of Use</span>
+            <span className="font-medium">Return & Refund Policy</span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold mb-8">Terms of Use</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-8">Return & Refund Policy</h1>
 
           <div className="prose max-w-none">
             <p className="text-gray-600 mb-8">Last Updated: April 5, 2025</p>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">1. Acceptance of Terms</h2>
-              <p>
-                Welcome to R.A. Apparel. These Terms of Use (&quot;Terms&quot;) govern your use of our website located
-                at www.ra-apparel.com (the &quot;Site&quot;) and all related services, features, content, and
-                applications offered by R.A. Apparel (collectively, the &quot;Services&quot;).
-              </p>
-              <p>
-                By accessing or using our Services, you agree to be bound by these Terms. If you do not agree to these
-                Terms, you may not access or use the Services.
-              </p>
-            </section>
-
-            {/* Additional terms sections would go here */}
+            {/* Returns content would go here */}
           </div>
         </div>
       </main>

@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import Navbar from "@/components/navbar"
@@ -12,6 +12,7 @@ import Footer from "@/components/footer"
 import { useAuth } from "@/contexts/auth-context"
 import { useToast } from "@/components/ui/toast"
 import { Button } from "@/components/ui/button"
+import { useSearchParams } from "@/components/search-params-provider"
 
 export default function EditAddressContent() {
   const router = useRouter()
@@ -21,7 +22,7 @@ export default function EditAddressContent() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
 
-  // Pre-fill with mock data for demo purposes
+  // Mock data for the existing address
   const [formData, setFormData] = useState({
     fullName: "John Doe",
     phone: "(+1) 234 567 890",
@@ -113,20 +114,6 @@ export default function EditAddressContent() {
     }, 1000)
   }
 
-  const handleDelete = () => {
-    setIsLoading(true)
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false)
-      toast({
-        title: "Address Deleted",
-        description: `Your ${addressType} address has been removed.`,
-      })
-      router.push("/account/address")
-    }, 1000)
-  }
-
   if (!isAuthenticated) {
     return null // Will redirect in useEffect
   }
@@ -149,8 +136,7 @@ export default function EditAddressContent() {
 
         <div className="bg-white p-6 rounded-lg border max-w-2xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Form fields */}
-            {/* ... (rest of the form code) */}
+            {/* Form fields similar to add address */}
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                 Full Name <span className="text-red-500">*</span>
@@ -168,34 +154,23 @@ export default function EditAddressContent() {
               {formErrors.fullName && <p className="text-red-500 text-sm mt-1">{formErrors.fullName}</p>}
             </div>
 
-            {/* More form fields... */}
+            {/* More form fields would go here */}
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <Button
-                  type="submit"
-                  className="bg-black text-white py-3 px-6 rounded-md font-medium hover:bg-black/90 transition-colors"
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Saving..." : "Update Address"}
-                </Button>
-                <Button
-                  type="button"
-                  onClick={() => router.push("/account/address")}
-                  variant="outline"
-                  className="border border-gray-300 py-3 px-6 rounded-md font-medium hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </Button>
-              </div>
+            <div className="flex items-center space-x-4">
               <Button
-                type="button"
-                onClick={handleDelete}
-                variant="outline"
-                className="border border-red-300 text-red-600 py-3 px-6 rounded-md font-medium hover:bg-red-50 transition-colors"
+                type="submit"
+                className="bg-black text-white py-3 px-6 rounded-md font-medium hover:bg-black/90 transition-colors"
                 disabled={isLoading}
               >
-                Delete
+                {isLoading ? "Saving..." : "Update Address"}
+              </Button>
+              <Button
+                type="button"
+                onClick={() => router.push("/account/address")}
+                variant="outline"
+                className="border border-gray-300 py-3 px-6 rounded-md font-medium hover:bg-gray-50 transition-colors"
+              >
+                Cancel
               </Button>
             </div>
           </form>

@@ -1,10 +1,14 @@
 import { Suspense } from "react"
-import EditAddressContent from "./edit-address-content"
+import { ClientOnly } from "@/components/with-client-only"
+import EditAddressContent from "./content"
 
 export default function EditAddressPage() {
   return (
     <Suspense fallback={<div>Loading address editor...</div>}>
-      <EditAddressContent />
+      <ClientOnly>
+        <EditAddressContent />
+      </ClientOnly>
     </Suspense>
   )
 }
+
