@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 
 export default function AccountContent() {
   const router = useRouter()
-  const { isAuthenticated, user, signOut } = useAuth()
+  const { isAuthenticated, user, logout } = useAuth() // Changed from signOut to logout
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function AccountContent() {
   }, [isAuthenticated, router])
 
   const handleSignOut = () => {
-    signOut()
+    logout() // Changed from signOut to logout
     router.push("/")
   }
 

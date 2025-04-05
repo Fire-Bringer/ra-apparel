@@ -16,6 +16,7 @@ interface User {
   id: string
   name: string
   email: string
+  profileImage?: string // Add this optional property
 }
 
 // Create the auth context
@@ -121,7 +122,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (authData.user && authData.user.email === email) {
           throw new Error("An account with this email already exists")
         }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         // Ignore parsing errors
       }
@@ -167,3 +167,4 @@ export function useAuth() {
   }
   return context
 }
+
