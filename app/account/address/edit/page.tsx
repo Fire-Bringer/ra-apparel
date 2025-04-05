@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import Navbar from "@/components/navbar"
@@ -12,16 +12,15 @@ import Footer from "@/components/footer"
 import { useAuth } from "@/contexts/auth-context"
 import { useToast } from "@/components/ui/toast"
 import { Button } from "@/components/ui/button"
+import { useClientSearchParams } from "@/components/client-search-params"
 
 export default function EditAddressPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const searchParams = useClientSearchParams() // Use our custom hook instead
+  const addressType = (searchParams.get("type") as "billing" | "shipping") || "billing"
   const { isAuthenticated } = useAuth()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
-
-  // Get address type from URL query
-  const addressType = (searchParams.get("type") as "billing" | "shipping") || "billing"
 
   // Pre-fill with mock data for demo purposes
   const [formData, setFormData] = useState({

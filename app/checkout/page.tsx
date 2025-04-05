@@ -13,14 +13,21 @@ import NavbarSpacer from "@/components/navbar-spacer"
 import Footer from "@/components/footer"
 import { useCart } from "@/contexts/cart-context"
 import { products } from "@/lib/products"
+// Remove the unused import
+// import { useClientSearchParams } from "@/components/client-search-params"
 
 export default function CheckoutPage() {
   const router = useRouter()
+  // Remove the unused searchParams variable
+  // const searchParams = useClientSearchParams()
   const { cartItems, subtotal } = useCart()
   const [selectedShipping, setSelectedShipping] = useState("free")
   const [differentBillingAddress, setDifferentBillingAddress] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState("card")
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // Rest of the component remains the same
+  // ...
 
   // Calculate shipping cost based on selection
   const getShippingCost = () => {
