@@ -10,6 +10,7 @@ import { NavigationEvents } from "@/components/navigation-events"
 import { ProgressBar } from "@/components/progress-bar"
 import { ToastProvider } from "@/components/ui/toast"
 import { NavigationLoader } from "@/components/navigation-loader"
+import { SearchParamsProvider } from "@/components/with-search-params"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -35,7 +36,7 @@ export default function RootLayout({
                 {/* Navigation loader will show loading UI during navigation */}
                 <NavigationLoader />
                 <Suspense fallback={null}>
-                  {children}
+                  <SearchParamsProvider>{children}</SearchParamsProvider>
                   {/* Navigation events to track route changes */}
                   <NavigationEvents />
                 </Suspense>

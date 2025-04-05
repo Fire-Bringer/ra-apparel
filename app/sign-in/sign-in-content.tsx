@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
@@ -9,7 +8,7 @@ import Navbar from "@/components/navbar"
 import NavbarSpacer from "@/components/navbar-spacer"
 import Footer from "@/components/footer"
 import { useAuth } from "@/contexts/auth-context"
-import { useSearchParams } from "@/components/search-params-provider"
+import { useSearchParams } from "@/components/with-search-params" // Use our custom hook
 import { Button } from "@/components/ui/button"
 
 export default function SignInContent() {
@@ -18,6 +17,7 @@ export default function SignInContent() {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get("redirectTo") || "/account"
 
+  // Rest of the component remains the same
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -121,3 +121,4 @@ export default function SignInContent() {
     </div>
   )
 }
+
