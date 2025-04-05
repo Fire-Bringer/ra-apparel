@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import {
   Menu,
   Search,
@@ -109,7 +110,13 @@ export default function Navbar() {
         {/* Desktop Navbar */}
         <div className="container mx-auto px-4 md:px-6 lg:px-8 hidden md:flex items-center justify-between h-16">
           <Link href="/" className="font-bold text-xl">
-            RAA LOGO
+            <Image
+              src="/raa-logo.png"
+              alt="RAA Logo"
+              width={50}
+              height={50}
+              className="rounded-full border-2 border-gray-200"
+            />
           </Link>
 
           <nav className="flex items-center space-x-8">
@@ -219,7 +226,13 @@ export default function Navbar() {
           </Button>
 
           <Link href="/" className="font-bold">
-            RAA
+            <Image
+              src="/raa-logo.png"
+              alt="RAA Logo"
+              width={40}
+              height={40}
+              className="rounded-full border-2 border-gray-200"
+            />
           </Link>
 
           <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
@@ -241,7 +254,15 @@ export default function Navbar() {
               className="fixed inset-y-0 left-0 w-[85%] max-w-sm bg-white overflow-y-auto -translate-x-full transition-transform duration-300 ease-in-out shadow-lg"
             >
               <div className="p-4 border-b flex items-center justify-between">
-                <div className="font-bold">RAA LOGO</div>
+                <div className="font-bold flex items-center">
+                  <Image
+                    src="/raa-logo.png"
+                    alt="RAA Logo"
+                    width={40}
+                    height={40}
+                    className="rounded-full border-2 border-gray-200"
+                  />
+                </div>
                 <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
                   <X className="h-5 w-5" />
                   <span className="sr-only">Close</span>
