@@ -16,6 +16,7 @@ const collections = [
     description: "Stylish options for him",
     imageSrc: "/mens-fits-collection.webp",
     slug: "mens-fits",
+    objectPosition: "70% center", // Adjusted to be a little to the right of left center
   },
   {
     id: "3",
@@ -23,6 +24,7 @@ const collections = [
     description: "Trendy looks for her",
     imageSrc: "/womens-fits-collection.webp",
     slug: "womens-fits",
+    objectPosition: "20% center", // Adjusted to be a little to the right of left center
   },
 ]
 
@@ -42,6 +44,7 @@ export default function CollectionsSection() {
                   alt={collection.name}
                   fill
                   className="object-cover"
+                  style={{ objectPosition: collection.objectPosition || "center" }} // Apply object position if specified
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-6 text-white">
@@ -65,6 +68,7 @@ export default function CollectionsSection() {
                   alt={collections[0].name}
                   fill
                   className="object-cover"
+                  style={{ objectPosition: collections[0].objectPosition || "center" }} // Apply object position if specified
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8 text-white">
@@ -86,6 +90,7 @@ export default function CollectionsSection() {
                     alt={collection.name}
                     fill
                     className="object-cover"
+                    style={{ objectPosition: collection.objectPosition || "center" }} // Apply object position if specified
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-6 text-white">
