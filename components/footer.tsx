@@ -207,9 +207,6 @@ export default function Footer() {
                 <Link href="/categories" className="text-sm hover:underline">
                   Product
                 </Link>
-                <Link href="/articles" className="text-sm hover:underline">
-                  Articles
-                </Link>
                 <Link href="/contact" className="text-sm hover:underline">
                   Contact Us
                 </Link>
