@@ -24,7 +24,7 @@ export default function Hero() {
         <div className="max-w-xl">
           {/* Shopping Now Button */}
           <Link
-            href="/shop"
+            href="/categories"
             className="inline-block mb-4 px-4 py-2 bg-black text-white text-sm font-medium hover:bg-black/90 transition-colors"
           >
             Shopping Now
@@ -35,18 +35,18 @@ export default function Hero() {
             More than
             <br />a hustle.
             <br />
-            Its a lifestyle.
+            It&apos;s a lifestyle.
           </h1>
 
           {/* Subheading */}
           <p className="text-white text-lg md:text-xl max-w-md mb-8">
-            Whether youre just starting out, or an OG, you get yours before they get theirs.
+            Whether you&apos;re just starting out, or an OG, you get yours before they get theirs.
           </p>
 
           {/* Optional CTA Button - Mobile Only */}
           <div className="md:hidden">
             <Link
-              href="/shop"
+              href="/categories"
               className="inline-block px-6 py-3 bg-white text-black font-medium hover:bg-gray-100 transition-colors"
             >
               Shop Collection
@@ -57,3 +57,4 @@ export default function Hero() {
     </section>
   )
 }
+

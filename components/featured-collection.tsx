@@ -62,7 +62,7 @@ export default function FeaturedCollection() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/shop"
+            href="/categories"
             className="inline-block px-8 py-3 bg-black text-white font-medium hover:bg-black/90 transition-colors"
           >
             View All Products

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import CountdownTimer from "./countdown-timer"
+import Link from "next/link"
 
 export default function LimitedEdition() {
   // Set sale end date to 4 days from now
@@ -29,7 +30,9 @@ export default function LimitedEdition() {
               <CountdownTimer targetDate={saleEndDate} />
             </div>
 
-            <Button className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium">Shop Now</Button>
+            <Button className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium" asChild>
+              <Link href="/categories">Shop Now</Link>
+            </Button>
           </div>
 
           {/* Images - Desktop Version (hidden on mobile) */}
