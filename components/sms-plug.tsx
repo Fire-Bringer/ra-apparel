@@ -49,7 +49,7 @@ export default function SmsPlug() {
         {/* Mobile Header (Left-aligned) */}
         <div className="md:hidden mb-6">
           <div className="text-xs font-medium uppercase tracking-wider text-gray-500">NEWSFEED</div>
-          <h2 className="text-2xl font-bold mt-1 mb-2">SMS PLUG</h2>
+          <h2 className="text-2xl font-bold mt-1 mb-2">Social Media</h2>
           <p className="text-sm">Follow us on social media for more discount & promotions</p>
           <Link
             href="https://instagram.com/raa"
@@ -64,7 +64,7 @@ export default function SmsPlug() {
         {/* Desktop Header (Centered) */}
         <div className="hidden md:block text-center mb-8">
           <div className="text-xs font-medium uppercase tracking-wider text-gray-500">NEWSFEED</div>
-          <h2 className="text-2xl font-bold mt-1 mb-2">SMS PLUG</h2>
+          <h2 className="text-2xl font-bold mt-1 mb-2">Social Media</h2>
           <p className="text-sm">Follow us on social media for more discount & promotions</p>
           <Link
             href="https://instagram.com/raa"
