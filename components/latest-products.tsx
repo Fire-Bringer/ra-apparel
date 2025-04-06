@@ -49,7 +49,7 @@ export default function LatestProducts() {
                 </div>
                 <Link
                   href={`/product/${product.slug}`}
-                  className="flex items-center text-sm font-medium border-b border-black pb-1 inline-block hover:opacity-80"
+                  className="flex items-center text-sm font-medium border-b border-black pb-1 hover:opacity-80"
                 >
                   Shop Now <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -87,7 +87,7 @@ export default function LatestProducts() {
                 </div>
                 <Link
                   href={`/product/${product.slug}`}
-                  className="flex items-center text-sm font-medium border-b border-black pb-1 inline-block hover:opacity-80"
+                  className="flex items-center text-sm font-medium border-b border-black pb-1 hover:opacity-80"
                 >
                   Shop Now <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -99,4 +99,3 @@ export default function LatestProducts() {
     </section>
   )
 }
-

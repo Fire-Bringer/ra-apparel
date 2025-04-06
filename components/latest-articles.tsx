@@ -51,7 +51,7 @@ export default function LatestArticles() {
                 <h3 className="text-xl font-medium mb-2">{article.title}</h3>
                 <Link
                   href={`/articles/${article.slug}`}
-                  className="flex items-center text-sm font-medium border-b border-black pb-1 inline-block hover:opacity-80"
+                  className="flex items-center text-sm font-medium border-b border-black pb-1 hover:opacity-80"
                 >
                   Read More <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -76,7 +76,7 @@ export default function LatestArticles() {
                 <h3 className="text-xl font-medium mb-3">{article.title}</h3>
                 <Link
                   href={`/articles/${article.slug}`}
-                  className="flex items-center text-sm font-medium border-b border-black pb-1 inline-block hover:opacity-80"
+                  className="flex items-center text-sm font-medium border-b border-black pb-1 hover:opacity-80"
                 >
                   Read More <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -88,4 +88,3 @@ export default function LatestArticles() {
     </section>
   )
 }
-
