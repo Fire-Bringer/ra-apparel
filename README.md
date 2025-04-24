@@ -6,6 +6,8 @@ A modern e-commerce platform for R.A. Apparel, built with Next.js.
 
 R.A. Apparel is a full-featured e-commerce application that allows customers to browse, search, and purchase clothing and accessories. The platform includes product management, shopping cart functionality, user authentication, and order processing.
 
+![ra-apparel-mockup](https://github.com/user-attachments/assets/09149fef-6713-4b55-b918-b04b067b8651)
+
 ## Installation
 
 To get started with this project, follow these steps:
